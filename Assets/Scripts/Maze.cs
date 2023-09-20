@@ -27,9 +27,9 @@ public class Maze : MonoBehaviour
 
     public IEnumerator Generate()
     {
-        WaitForSeconds delay = new WaitForSeconds(generationStepDelay);
+        WaitForSeconds delay = new(generationStepDelay);
         cells = new MazeCell[size.x, size.z];
-        List<MazeCell> activeCells = new List<MazeCell>();
+        List<MazeCell> activeCells = new();
         DoFirstGenerationStep(activeCells);
         while (activeCells.Count > 0)
         {
@@ -40,7 +40,7 @@ public class Maze : MonoBehaviour
 
     private MazeCell CreateCell(IntVector2 coordinates)
     {
-        MazeCell newCell = Instantiate(cellPrefab) as MazeCell;
+        MazeCell newCell = Instantiate(cellPrefab);
         cells[coordinates.x, coordinates.z] = newCell;
         newCell.coordinates = coordinates;
         newCell.name = "Maze Cell " + coordinates.x + ", " + coordinates.z;
@@ -93,19 +93,19 @@ public class Maze : MonoBehaviour
 
     private void CreatePassage(MazeCell cell, MazeCell otherCell, MazeDirection direction)
     {
-        MazePassage passage = Instantiate(passagePrefab) as MazePassage;
+        MazePassage passage = Instantiate(passagePrefab);
         passage.Initialize(cell, otherCell, direction);
-        passage = Instantiate(passagePrefab) as MazePassage;
+        passage = Instantiate(passagePrefab);
         passage.Initialize(otherCell, cell, direction.GetOpposite());
     }
 
     private void CreateWall(MazeCell cell, MazeCell otherCell, MazeDirection direction)
     {
-        MazeWall wall = Instantiate(wallPrefab) as MazeWall;
+        MazeWall wall = Instantiate(wallPrefab);
         wall.Initialize(cell, otherCell, direction);
         if (otherCell != null)
         {
-            wall = Instantiate(wallPrefab) as MazeWall;
+            wall = Instantiate(wallPrefab);
             wall.Initialize(otherCell, cell, direction.GetOpposite());
         }
     }
