@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class MazePassage : MazeCellEdge { }
+public class MazePassage : MazeCellEdge {}
