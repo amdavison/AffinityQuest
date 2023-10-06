@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Player movement controller.
+/// </summary>
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]

@@ -1,11 +1,18 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Player controller.
+/// </summary>
 public class Player : MonoBehaviour {
 
 	private MazeCell currentCell;
 
 	private MazeDirection currentDirection;
 
+	/// <summary>
+    /// Sets local position of player to new cell position.
+    /// </summary>
+    /// <param name="cell">MazeCell cell to move to</param>
 	public void SetLocation (MazeCell cell) {
 		if (currentCell != null) {
 			currentCell.OnPlayerExited();
@@ -15,6 +22,10 @@ public class Player : MonoBehaviour {
 		currentCell.OnPlayerEntered();
 	}
 
+	/// <summary>
+    /// Moves player in given direction.
+    /// </summary>
+    /// <param name="direction">MazeDirection direction to move player</param>
 	private void Move (MazeDirection direction) {
 		MazeCellEdge edge = currentCell.GetEdge(direction);
 		if (edge is MazePassage) {
@@ -22,6 +33,10 @@ public class Player : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+    /// Sets locale rotation of player to look in specified direction.
+    /// </summary>
+    /// <param name="direction">MazeDirection direction for player to face</param>
 	private void Look (MazeDirection direction) {
 		transform.localRotation = direction.ToRotation();
 		currentDirection = direction;

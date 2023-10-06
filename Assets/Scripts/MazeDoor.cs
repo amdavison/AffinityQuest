@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Concrete maze door passage object.
+/// </summary>
 public class MazeDoor : MazePassage {
 
 	private static Quaternion
@@ -16,6 +19,12 @@ public class MazeDoor : MazePassage {
 		}
 	}
 	
+	/// <summary>
+    /// Initializes MazeDoor passage.
+    /// </summary>
+    /// <param name="primary">MazeCell primary cell</param>
+    /// <param name="other">MazeCell secondary neighbor</param>
+    /// <param name="direction">MazeDirection direction of door instance for primary cell</param>
 	public override void Initialize (MazeCell primary, MazeCell other, MazeDirection direction) {
 		base.Initialize(primary, other, direction);
 		if (OtherSideOfDoor != null) {
@@ -33,11 +42,17 @@ public class MazeDoor : MazePassage {
 		}
 	}
 
+	/// <summary>
+    /// Opens door and shows neighboring room.
+    /// </summary>
 	public override void OnPlayerEntered () {
 		OtherSideOfDoor.hinge.localRotation = hinge.localRotation = isMirrored ? mirroredRotation : normalRotation;
 		OtherSideOfDoor.cell.room.Show();
 	}
 	
+	/// <summary>
+    /// Closes door and hides neighboring room.
+    /// </summary>
 	public override void OnPlayerExited () {
 		OtherSideOfDoor.hinge.localRotation = hinge.localRotation = Quaternion.identity;
 		OtherSideOfDoor.cell.room.Hide();
