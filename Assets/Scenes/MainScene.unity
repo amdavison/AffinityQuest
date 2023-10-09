@@ -1040,6 +1040,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2770734562397318418, guid: 0ffb21b6936114cc59214ea37d5c0c3e, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2824493808066142983, guid: 0ffb21b6936114cc59214ea37d5c0c3e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1083,6 +1087,10 @@ PrefabInstance:
     - target: {fileID: 4070089334729687426, guid: 0ffb21b6936114cc59214ea37d5c0c3e, type: 3}
       propertyPath: m_Name
       value: PlayerOrb
+      objectReference: {fileID: 0}
+    - target: {fileID: 4070089334729687426, guid: 0ffb21b6936114cc59214ea37d5c0c3e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1197,7 +1205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
