@@ -41,6 +41,7 @@ public class MazeCell : MonoBehaviour {
 	public void Initialize (MazeRoom room) {
 		room.Add(this);
 		transform.GetChild(0).GetComponent<Renderer>().material = room.settings.floorMaterial;
+		transform.GetChild(1).GetComponent<Renderer>().material = room.settings.ceilingMaterial;
 	}
 
 	/// <summary>
@@ -90,7 +91,7 @@ public class MazeCell : MonoBehaviour {
     /// Hides room player exited.
     /// </summary>
 	public void OnPlayerExited () {
-		room.Hide();
+		//room.Hide();
 		for (int i = 0; i < edges.Length; i++) {
 			edges[i].OnPlayerExited();
 		}
