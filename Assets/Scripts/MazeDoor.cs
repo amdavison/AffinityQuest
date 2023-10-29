@@ -11,6 +11,12 @@ public class MazeDoor : MazePassage {
 
 	public Transform hinge;
 
+	public AudioSource doorAudio;
+
+	public AudioClip openDoorClip;
+
+	public AudioClip closeDoorClip;
+
 	private bool isMirrored;
 
 	private MazeDoor OtherSideOfDoor {
@@ -48,6 +54,7 @@ public class MazeDoor : MazePassage {
 	public override void OnPlayerEntered () {
 		OtherSideOfDoor.hinge.localRotation = hinge.localRotation = isMirrored ? mirroredRotation : normalRotation;
 		OtherSideOfDoor.cell.room.Show();
+		
 	}
 	
 	/// <summary>
