@@ -31,19 +31,21 @@ public class MazeRoom : ScriptableObject {
 		}
 	}
 
-	/// <summary>
+    /// <summary>
     /// Hides all cells in room.
     /// </summary>
-	public void Hide () {
-		for (int i = 0; i < cells.Count; i++) {
-			cells[i].Hide();
-		}
-	}
-	
-	/// <summary>
+    public void Hide()
+    {
+        for (int i = 0; i < cells.Count; i++)
+        {
+            cells[i].Hide();
+        }
+    }
+
+    /// <summary>
     /// Shows all cells in room.
     /// </summary>
-	public void Show () {
+    public void Show () {
 		for (int i = 0; i < cells.Count; i++) {
 			cells[i].Show();
 		}
