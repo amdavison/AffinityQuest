@@ -64,4 +64,20 @@ public class MazeDoor : MazePassage {
 		OtherSideOfDoor.hinge.localRotation = hinge.localRotation = Quaternion.identity;
 		//OtherSideOfDoor.cell.room.Hide();
 	}
+
+    private void OnTriggerEnter(Collider other)
+    {
+		if (other.gameObject.CompareTag("Player"))
+        {
+			Debug.Log("Player collision!");
+        }
+		//Debug.Log("OnTriggerEnter: " + other);
+		//doorAudio.PlayOneShot(openDoorClip);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+		Debug.Log("OnTriggerExit: " + other);
+		doorAudio.PlayOneShot(closeDoorClip);
+    }
 }
