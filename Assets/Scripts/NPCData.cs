@@ -18,10 +18,10 @@ public enum NPCType
     Calm
 }
 
-public class NPC
+public class NPCData
 {
-    public int level;
-    public int npcType;
+    public Level level;
+    public NPCType npcType;
     public string greeting;
     public string opt1;
     public string opt2;
