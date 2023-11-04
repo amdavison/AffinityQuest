@@ -39,6 +39,7 @@ public class MazeDoor : MazePassage {
 			Vector3 p = hinge.localPosition;
 			p.x = -p.x;
 			hinge.localPosition = p;
+			Destroy(gameObject.GetComponent<Collider>());
 		}
 		for (int i = 0; i < transform.childCount; i++) {
 			Transform child = transform.GetChild(i);
@@ -69,15 +70,15 @@ public class MazeDoor : MazePassage {
     {
 		if (other.gameObject.CompareTag("Player"))
         {
-			Debug.Log("Player collision!");
-        }
-		//Debug.Log("OnTriggerEnter: " + other);
-		//doorAudio.PlayOneShot(openDoorClip);
-    }
+			doorAudio.PlayOneShot(openDoorClip);
+		}
+	}
 
     private void OnTriggerExit(Collider other)
     {
-		Debug.Log("OnTriggerExit: " + other);
-		doorAudio.PlayOneShot(closeDoorClip);
+		if (other.gameObject.CompareTag("Player"))
+		{
+			doorAudio.PlayOneShot(closeDoorClip);
+		}
     }
 }
