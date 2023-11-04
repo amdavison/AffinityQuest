@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 /// <summary>
 /// Manages game start and restart.
@@ -15,7 +16,7 @@ public class GameManager : MonoBehaviour {
 
 	private Player playerInstance;
 
-	List<NPC> npcs = new List<NPC>();
+	List<NPCData> npcs = new();
 
 	private void Start () {
 		LoadData();
@@ -33,14 +34,11 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     /// <returns>IEnumerator mazeInstance generation</returns>
 	private IEnumerator BeginGame () {
-        Camera.main.clearFlags = CameraClearFlags.Skybox;
-        Camera.main.rect = new Rect(0f, 0f, 1f, 1f);
 		mazeInstance = Instantiate(mazePrefab) as Maze;
 		yield return StartCoroutine(mazeInstance.Generate());
 		playerInstance = Instantiate(playerPrefab) as Player;
 		playerInstance.SetLocation(mazeInstance.GetCell(mazeInstance.RandomCoordinates));
-		Camera.main.clearFlags = CameraClearFlags.Depth;
-		Camera.main.rect = new Rect(0f, 0f, 0.5f, 0.5f);
+		Destroy(Camera.main.GetComponent<AudioListener>());
     }
 
 	/// <summary>
@@ -68,10 +66,10 @@ public class GameManager : MonoBehaviour {
         {
 			string[] row = data[i].Split(',');
 
-			NPC npc = new NPC();
+			NPCData npc = new();
 
-			int.TryParse(row[0], out npc.level);
-			int.TryParse(row[1], out npc.npcType);
+            npc.level = (Level)Enum.Parse(typeof(Level), row[0]);
+			npc.npcType = (NPCType)Enum.Parse(typeof(NPCType), row[1]);
 			npc.greeting = row[2].Replace("{c}", ",");
 			npc.opt1 = row[3];
 			npc.opt2 = row[4];
