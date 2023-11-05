@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Player movement controller.
+/// Player movement controller. <note>DELETE LATER!</note>
 /// </summary>
 public class PlayerMovement : MonoBehaviour
 {

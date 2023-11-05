@@ -1,7 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Controls the fading in and out of game view when transitioning between scenes.
+/// </summary>
 public class FadeInOut : MonoBehaviour
 {
     public CanvasGroup canvasGroup;

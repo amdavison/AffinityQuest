@@ -11,11 +11,9 @@ public class MazeDoor : MazePassage {
 
 	public Transform hinge;
 
-	public AudioSource doorAudio;
+	public AudioClip openDoor;
 
-	public AudioClip openDoorClip;
-
-	public AudioClip closeDoorClip;
+	public AudioClip closeDoor;
 
 	private bool isMirrored;
 
@@ -59,26 +57,34 @@ public class MazeDoor : MazePassage {
 	}
 	
 	/// <summary>
-    /// Closes door and hides neighboring room.
+    /// Closes door.
     /// </summary>
 	public override void OnPlayerExited () {
 		OtherSideOfDoor.hinge.localRotation = hinge.localRotation = Quaternion.identity;
 		//OtherSideOfDoor.cell.room.Hide();
 	}
 
-    private void OnTriggerEnter(Collider other)
+	/// <summary>
+    /// Handles playing of open door SFX when player collider enters trigger.
+    /// </summary>
+    /// <param name="other">Collider collider component of other game object</param>
+	private void OnTriggerEnter(Collider other)
     {
 		if (other.gameObject.CompareTag("Player"))
         {
-			doorAudio.PlayOneShot(openDoorClip);
+			AudioManager.instance.PlaySFX(openDoor);
 		}
 	}
 
-    private void OnTriggerExit(Collider other)
+	/// <summary>
+    /// Handles playing of close door SFX when player collider exits trigger.
+    /// </summary>
+    /// <param name="other">Collider collider component of other game object</param>
+	private void OnTriggerExit(Collider other)
     {
 		if (other.gameObject.CompareTag("Player"))
 		{
-			doorAudio.PlayOneShot(closeDoorClip);
+			AudioManager.instance.PlaySFX(closeDoor);
 		}
     }
 }

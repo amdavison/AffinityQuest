@@ -1,13 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+/// <summary>
+/// Enum that represents game level.
+/// </summary>
 public enum Level
 {
     Dark,
     Light
 }
 
+/// <summary>
+/// Enum that represents NPC type.
+/// </summary>
 public enum NPCType
 {
     Sad,
@@ -18,6 +20,9 @@ public enum NPCType
     Calm
 }
 
+/// <summary>
+/// Data class for NPCs.
+/// </summary>
 public class NPCData
 {
     public Level level;

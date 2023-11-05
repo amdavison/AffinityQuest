@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,6 +8,8 @@ using UnityEngine.SceneManagement;
 public class SceneChanger : MonoBehaviour
 {
     private FadeInOut fade;
+
+    public AudioClip transition;
 
     private void Start()
     {
@@ -31,11 +32,9 @@ public class SceneChanger : MonoBehaviour
     /// <returns>IEnumerator transition time</returns>
     private IEnumerator LoadAsyncScene(string name)
     {
-        // call fade
+        // call fade and play transition clip
         fade.FadeIn();
-
-        // wait
-        //yield return new WaitForSeconds(1);
+        AudioManager.instance.PlayBackground(transition);
 
         // load scene
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(name);

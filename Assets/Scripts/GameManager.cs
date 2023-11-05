@@ -1,69 +1,30 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System;
 
 /// <summary>
-/// Manages game start and restart.
+/// Manages game flow.
 /// </summary>
-public class GameManager : MonoBehaviour {
-
-	public Maze mazePrefab;
-
-	public Player playerPrefab;
-
-	private Maze mazeInstance;
-
-	private Player playerInstance;
+public class GameManager : MonoBehaviour
+{
+	public static GameManager instance;
 
 	private List<NPCData> npcs = new();
 
-	private FadeInOut fade;
-
-	private void Start () {
-		fade = FindFirstObjectByType<FadeInOut>();
-		LoadData();
-		StartCoroutine(BeginGame());
-		
-	}
-	
-	private void Update () {
-		if (Input.GetKeyDown(KeyCode.Space)) {
-            RestartGame();
-		}
-	}
-
-	public void QuitApplication()
+    private void Awake()
     {
-		Application.Quit();
+        if (instance == null)
+        {
+			instance = this;
+			DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+			Destroy(gameObject);
+        }
     }
 
-	/// <summary>
-    /// Initializes and starts new game.
-    /// </summary>
-    /// <returns>IEnumerator mazeInstance generation</returns>
-	private IEnumerator BeginGame () {
-		mazeInstance = Instantiate(mazePrefab) as Maze;
-		yield return StartCoroutine(mazeInstance.Generate());
-		playerInstance = Instantiate(playerPrefab) as Player;
-		playerInstance.SetLocation(mazeInstance.GetCell(mazeInstance.RandomCoordinates));
-		Destroy(Camera.main.GetComponent<AudioListener>());
-		fade.FadeOut();
-    }
-
-	/// <summary>
-    /// Stops all coruoutines and starts new game.
-    /// </summary>
-	private void RestartGame () {
-		fade.FadeIn();
-		Camera.main.gameObject.AddComponent<AudioListener>();
-		StopAllCoroutines();
-		Destroy(mazeInstance.gameObject);
-		if (playerInstance != null) {
-			Destroy(playerInstance.gameObject);
-		}
-		StartCoroutine(BeginGame());
-	}
+    private void Start () { LoadData(); }
 
     /// <summary>
     /// Loads csv file data.
