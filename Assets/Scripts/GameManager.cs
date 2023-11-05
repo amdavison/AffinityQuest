@@ -16,18 +16,27 @@ public class GameManager : MonoBehaviour {
 
 	private Player playerInstance;
 
-	List<NPCData> npcs = new();
+	private List<NPCData> npcs = new();
+
+	private FadeInOut fade;
 
 	private void Start () {
+		fade = FindFirstObjectByType<FadeInOut>();
 		LoadData();
 		StartCoroutine(BeginGame());
+		
 	}
 	
 	private void Update () {
 		if (Input.GetKeyDown(KeyCode.Space)) {
-			RestartGame();
+            RestartGame();
 		}
 	}
+
+	public void QuitApplication()
+    {
+		Application.Quit();
+    }
 
 	/// <summary>
     /// Initializes and starts new game.
@@ -39,12 +48,15 @@ public class GameManager : MonoBehaviour {
 		playerInstance = Instantiate(playerPrefab) as Player;
 		playerInstance.SetLocation(mazeInstance.GetCell(mazeInstance.RandomCoordinates));
 		Destroy(Camera.main.GetComponent<AudioListener>());
+		fade.FadeOut();
     }
 
 	/// <summary>
     /// Stops all coruoutines and starts new game.
     /// </summary>
 	private void RestartGame () {
+		fade.FadeIn();
+		Camera.main.gameObject.AddComponent<AudioListener>();
 		StopAllCoroutines();
 		Destroy(mazeInstance.gameObject);
 		if (playerInstance != null) {
@@ -53,10 +65,10 @@ public class GameManager : MonoBehaviour {
 		StartCoroutine(BeginGame());
 	}
 
-	/// <summary>
+    /// <summary>
     /// Loads csv file data.
     /// </summary>
-	private void LoadData()
+    private void LoadData()
     {
 		TextAsset questdata = Resources.Load<TextAsset>("questdata");
 
