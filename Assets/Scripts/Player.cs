@@ -44,29 +44,53 @@ public class Player : MonoBehaviour {
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             Move(currentDirection);
         }
-        else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            Move(currentDirection.GetNextClockwise());
-        }
-        else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+        //else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+        //{
+        //    Move(currentDirection.GetNextClockwise());
+        //}
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             Move(currentDirection.GetOpposite());
         }
-        else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            Move(currentDirection.GetNextCounterclockwise());
-        }
-        else if (Input.GetKeyDown(KeyCode.Q))
+        //else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+        //{
+        //    Move(currentDirection.GetNextCounterclockwise());
+        //}
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             Look(currentDirection.GetNextCounterclockwise());
         }
-        else if (Input.GetKeyDown(KeyCode.E))
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             Look(currentDirection.GetNextClockwise());
         }
+        //if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+        //{
+        //    Move(currentDirection);
+        //}
+        //else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+        //{
+        //    Move(currentDirection.GetNextClockwise());
+        //}
+        //else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+        //{
+        //    Move(currentDirection.GetOpposite());
+        //}
+        //else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+        //{
+        //    Move(currentDirection.GetNextCounterclockwise());
+        //}
+        //else if (Input.GetKeyDown(KeyCode.Q))
+        //{
+        //    Look(currentDirection.GetNextCounterclockwise());
+        //}
+        //else if (Input.GetKeyDown(KeyCode.E))
+        //{
+        //    Look(currentDirection.GetNextClockwise());
+        //}
     }
 }
