@@ -8,25 +8,20 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class SceneChanger : MonoBehaviour
 {
-    public Animator animator;
-    public float transitionTime = 1.75f;
+    private FadeInOut fade;
 
-    /// <summary>
-    /// Begins quest game and loads game scene level.
-    /// </summary>
-    public void StartQuest()
+    private void Start()
     {
-        Debug.Log("Starting quest!");
-        StartCoroutine(LoadLevel("GameScene"));
+        fade = FindFirstObjectByType<FadeInOut>();
     }
 
     /// <summary>
-    /// Quits application.
+    /// Loads new level.
     /// </summary>
-    public void QuitGame()
+    /// <param name="name">string name of level to load</param>
+    public void LoadScene(string name)
     {
-        Application.Quit();
-        Debug.Log("Quit");
+        StartCoroutine(LoadAsyncScene(name));
     }
 
     /// <summary>
@@ -34,12 +29,13 @@ public class SceneChanger : MonoBehaviour
     /// </summary>
     /// <param name="name">string name of level to load</param>
     /// <returns>IEnumerator transition time</returns>
-    private IEnumerator LoadLevel(string name)
+    private IEnumerator LoadAsyncScene(string name)
     {
-        // play animation
-        animator.SetTrigger("Start");
+        // call fade
+        fade.FadeIn();
+
         // wait
-        yield return new WaitForSeconds(transitionTime);
+        //yield return new WaitForSeconds(1);
 
         // load scene
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(name);
