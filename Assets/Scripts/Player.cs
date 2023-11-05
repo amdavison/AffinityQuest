@@ -48,18 +48,10 @@ public class Player : MonoBehaviour {
         {
             Move(currentDirection);
         }
-        //else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
-        //{
-        //    Move(currentDirection.GetNextClockwise());
-        //}
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             Move(currentDirection.GetOpposite());
         }
-        //else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
-        //{
-        //    Move(currentDirection.GetNextCounterclockwise());
-        //}
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             Look(currentDirection.GetNextCounterclockwise());
