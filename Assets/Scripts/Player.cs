@@ -85,4 +85,22 @@ public class Player : MonoBehaviour {
         //    Look(currentDirection.GetNextClockwise());
         //}
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Collision entered...");
+        if (other.CompareTag("NPC"))
+        {
+            Debug.Log("Collided with NPC");
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        Debug.Log("Collision exited");
+        if (other.CompareTag("NPC"))
+        {
+            Debug.Log("Exited collision with NPC");
+        }
+    }
 }
