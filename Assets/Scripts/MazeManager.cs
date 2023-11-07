@@ -10,10 +10,6 @@ public class MazeManager : MonoBehaviour
 
 	public Player playerPrefab;
 
-	public AudioClip gamePlay;
-
-	public AudioClip transition;
-
 	private Maze mazeInstance;
 
 	private Player playerInstance;
@@ -47,7 +43,7 @@ public class MazeManager : MonoBehaviour
 		playerInstance.SetLocation(mazeInstance.GetCell(mazeInstance.RandomCoordinates));
 		Destroy(Camera.main.GetComponent<AudioListener>());
 		fade.FadeOut();
-		AudioManager.instance.PlayBackground(gamePlay);
+		AudioManager.instance.PlayBackground(AudioManager.instance.gamePlay);
 	}
 
 	/// <summary>
@@ -56,7 +52,7 @@ public class MazeManager : MonoBehaviour
 	private void RestartGame()
 	{
 		fade.FadeIn();
-		AudioManager.instance.PlayBackground(transition);
+		AudioManager.instance.PlayBackground(AudioManager.instance.transition);
 		Camera.main.gameObject.AddComponent<AudioListener>();
 		StopAllCoroutines();
 		Destroy(mazeInstance.gameObject);

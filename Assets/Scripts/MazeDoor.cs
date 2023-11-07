@@ -11,10 +11,6 @@ public class MazeDoor : MazePassage {
 
 	public Transform hinge;
 
-	public AudioClip openDoor;
-
-	public AudioClip closeDoor;
-
 	private bool isMirrored;
 
 	private MazeDoor OtherSideOfDoor {
@@ -72,7 +68,7 @@ public class MazeDoor : MazePassage {
     {
 		if (other.gameObject.CompareTag("Player"))
         {
-			AudioManager.instance.PlaySFX(openDoor);
+			AudioManager.instance.PlaySFX(AudioManager.instance.openDoor);
 		}
 	}
 
@@ -84,7 +80,7 @@ public class MazeDoor : MazePassage {
     {
 		if (other.gameObject.CompareTag("Player"))
 		{
-			AudioManager.instance.PlaySFX(closeDoor);
+			AudioManager.instance.PlaySFX(AudioManager.instance.closeDoor);
 		}
     }
 }
