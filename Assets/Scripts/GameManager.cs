@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 /// <summary>
 /// Manages game flow.
@@ -53,5 +54,33 @@ public class GameManager : MonoBehaviour
 
 			npcs.Add(npc);
 		}
+    }
+
+	/// <summary>
+    /// Shuffles a given list of type T.
+    /// </summary>
+    /// <typeparam name="T">Specifies the element type of list</typeparam>
+    /// <param name="inputList">List<T> list of items of type T to bre shuffled</param>
+	private void Shuffle<T>(List<T> inputList)
+    {
+		for (int i = 0; i < inputList.Count - 1; i++)
+        {
+			T temp = inputList[i];
+			int randomIndex = UnityEngine.Random.Range(i, inputList.Count);
+			inputList[i] = inputList[randomIndex];
+			inputList[randomIndex] = temp;
+        }
+    }
+
+	/// <summary>
+    /// Creates and returns a Linked List of all NPC data objects of the same type.
+    /// </summary>
+    /// <param name="npcType">NPCType type of NPC</param>
+    /// <returns>LinkedList<NPCData> linked list of NPC data</NPCData></returns>
+	public LinkedList<NPCData> NPCs(NPCType npcType)
+    {
+		List<NPCData> npcsOfType = npcs.Where(npc => npc.npcType == npcType).ToList();
+		Shuffle(npcsOfType);
+		return new LinkedList<NPCData>(npcsOfType);
     }
 }
