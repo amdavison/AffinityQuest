@@ -11,9 +11,13 @@ public class AudioManager : MonoBehaviour
 
     [Header("Audio Clip")]
     public AudioClip background;
-    public AudioClip buttonClick;
-    public AudioClip portalOpen;
-    public AudioClip dialog;
+    public AudioClip gamePlay;
+    public AudioClip transition;
+    public AudioClip openDoor;
+    public AudioClip closeDoor;
+    //public AudioClip buttonClick;
+    //public AudioClip portalOpen;
+    //public AudioClip dialog;
 
     public static AudioManager instance;
 
