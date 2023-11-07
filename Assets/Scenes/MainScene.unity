@@ -1395,9 +1395,10 @@ MonoBehaviour:
   musicSource: {fileID: 971447526}
   SFXSource: {fileID: 1889382237}
   background: {fileID: 8300000, guid: 417a699fdcebc45a2a0455997e6115fe, type: 3}
-  buttonClick: {fileID: 8300000, guid: 8698ebac3a6ad4984b8039176387f24f, type: 3}
-  portalOpen: {fileID: 8300000, guid: 3f9bfd7115f9f3b4c9f8e3e8696803ab, type: 3}
-  dialog: {fileID: 8300000, guid: c6c54688607dd45e4ac648de30477dd3, type: 3}
+  gamePlay: {fileID: 8300000, guid: b8876d9e9fbc14c17a91434e4f0a152a, type: 3}
+  transition: {fileID: 8300000, guid: ab9ac488bfa9a4afe97723e9eae302b7, type: 3}
+  openDoor: {fileID: 8300000, guid: fe04eceea7d254e459491a324fbb4878, type: 3}
+  closeDoor: {fileID: 8300000, guid: 43ee970ca1f8046e08fcd62444401446, type: 3}
 --- !u!1 &1398006426
 GameObject:
   m_ObjectHideFlags: 0
@@ -1723,7 +1724,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
