@@ -39,7 +39,7 @@ public class Maze : MonoBehaviour {
     /// </summary>
     /// <param name="coordinate">IntVector2 to verify</param>
     /// <returns>bool true if within game space, otherwise false</returns>
-	public bool ContainsCoordinates (IntVector2 coordinate) {
+	public bool ContainsCoordinates(IntVector2 coordinate) {
 		return coordinate.x >= 0 && coordinate.x < size.x && coordinate.z >= 0 && coordinate.z < size.z;
 	}
 
@@ -48,7 +48,7 @@ public class Maze : MonoBehaviour {
     /// </summary>
     /// <param name="coordinates">IntVector2 coordinates of cell to retrieve</param>
     /// <returns>MazeCell at given coordinates</returns>
-	public MazeCell GetCell (IntVector2 coordinates) {
+	public MazeCell GetCell(IntVector2 coordinates) {
 		return cells[coordinates.x, coordinates.z];
 	}
 
@@ -56,7 +56,7 @@ public class Maze : MonoBehaviour {
     /// Generates new maze of cells.
     /// </summary>
     /// <returns>IEnumerator wait delay</returns>
-	public IEnumerator Generate () {
+	public IEnumerator Generate() {
 		WaitForSeconds delay = new WaitForSeconds(generationStepDelay);
 		cells = new MazeCell[size.x, size.z];
 		List<MazeCell> activeCells = new List<MazeCell>();
@@ -75,7 +75,7 @@ public class Maze : MonoBehaviour {
     /// First generation step to create and add new cell to activeCells.
     /// </summary>
     /// <param name="activeCells">List<MazeCell> list of active cells</param>
-	private void DoFirstGenerationStep (List<MazeCell> activeCells) {
+	private void DoFirstGenerationStep(List<MazeCell> activeCells) {
 		MazeCell newCell = CreateCell(RandomCoordinates);
 		newCell.Initialize(CreateRoom(-1));
 		activeCells.Add(newCell);
@@ -85,7 +85,7 @@ public class Maze : MonoBehaviour {
     /// Secondary generation step to create a passage, wall, or room.
     /// </summary>
     /// <param name="activeCells">List<MazeCell> list of active cells</param>
-	private void DoNextGenerationStep (List<MazeCell> activeCells) {
+	private void DoNextGenerationStep(List<MazeCell> activeCells) {
 		int currentIndex = activeCells.Count - 1;
 		MazeCell currentCell = activeCells[currentIndex];
 		if (currentCell.IsFullyInitialized) {
@@ -118,7 +118,7 @@ public class Maze : MonoBehaviour {
     /// </summary>
     /// <param name="coordinates">IntVector2 coordinates of new cell</param>
     /// <returns>MazeCell that was created</returns>
-	private MazeCell CreateCell (IntVector2 coordinates) {
+	private MazeCell CreateCell(IntVector2 coordinates) {
 		MazeCell newCell = Instantiate(cellPrefab) as MazeCell;
 		cells[coordinates.x, coordinates.z] = newCell;
 		newCell.coordinates = coordinates;
@@ -134,7 +134,7 @@ public class Maze : MonoBehaviour {
     /// <param name="cell">MazeCell current cell</param>
     /// <param name="otherCell">MazeCell neighbor</param>
     /// <param name="direction">MazeDirection direction of passage placement</param>
-	private void CreatePassage (MazeCell cell, MazeCell otherCell, MazeDirection direction) {
+	private void CreatePassage(MazeCell cell, MazeCell otherCell, MazeDirection direction) {
 		MazePassage prefab = Random.value < doorProbability ? doorPrefab : passagePrefab;
 		MazePassage passage = Instantiate(prefab) as MazePassage;
 		passage.Initialize(cell, otherCell, direction);
@@ -154,7 +154,7 @@ public class Maze : MonoBehaviour {
     /// <param name="cell">MazeCell current cell</param>
     /// <param name="otherCell">MazeCell neighbor</param>
     /// <param name="direction">MazeDirection direction of passage placement</param>
-	private void CreatePassageInSameRoom (MazeCell cell, MazeCell otherCell, MazeDirection direction) {
+	private void CreatePassageInSameRoom(MazeCell cell, MazeCell otherCell, MazeDirection direction) {
 		MazePassage passage = Instantiate(passagePrefab) as MazePassage;
 		passage.Initialize(cell, otherCell, direction);
 		passage = Instantiate(passagePrefab) as MazePassage;
@@ -173,7 +173,7 @@ public class Maze : MonoBehaviour {
     /// <param name="cell">MazeCell current cell</param>
     /// <param name="otherCell">MazeCell neighbor</param>
     /// <param name="direction">MazeDirection direction of wall placement</param>
-	private void CreateWall (MazeCell cell, MazeCell otherCell, MazeDirection direction) {
+	private void CreateWall(MazeCell cell, MazeCell otherCell, MazeDirection direction) {
 		MazeWall wall = Instantiate(wallPrefabs[Random.Range(0, wallPrefabs.Length)]) as MazeWall;
 		wall.Initialize(cell, otherCell, direction);
 		if (otherCell != null) {
@@ -187,7 +187,7 @@ public class Maze : MonoBehaviour {
     /// </summary>
     /// <param name="indexToExclude">int index of current room</param>
     /// <returns>MazeRoom that was created</returns>
-	private MazeRoom CreateRoom (int indexToExclude) {
+	private MazeRoom CreateRoom(int indexToExclude) {
 		MazeRoom newRoom = ScriptableObject.CreateInstance<MazeRoom>();
 		newRoom.settingsIndex = Random.Range(0, roomSettings.Length);
 		if (newRoom.settingsIndex == indexToExclude) {

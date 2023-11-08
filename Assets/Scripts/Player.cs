@@ -13,33 +13,35 @@ public class Player : MonoBehaviour {
 	/// Sets local position of player to new cell position.
 	/// </summary>
 	/// <param name="cell">MazeCell cell to move to</param>
-	public void SetLocation (MazeCell cell) {
+	public void SetLocation(MazeCell cell) {
 		if (currentCell != null) {
 			currentCell.OnPlayerExited();
 		}
 		currentCell = cell;
 		transform.localPosition = cell.transform.localPosition;
-		currentCell.OnPlayerEntered();
+        currentCell.OnPlayerEntered();
 	}
 
-	/// <summary>
+    /// <summary>
     /// Moves player in given direction.
     /// </summary>
     /// <param name="direction">MazeDirection direction to move player</param>
-	private void Move (MazeDirection direction) {
-		MazeCellEdge edge = currentCell.GetEdge(direction);
-		if (edge is MazePassage) {
+    private void Move(MazeDirection direction)
+    {
+        MazeCellEdge edge = currentCell.GetEdge(direction);
+        if (edge is MazePassage)
+        {
             SetLocation(edge.otherCell);
-		}
-	}
+        }
+    }
 
-	/// <summary>
-    /// Sets locale rotation of player to look in specified direction.
+    /// <summary>
+    /// Sets locale rotation of player to turn to specified direction.
     /// </summary>
     /// <param name="direction">MazeDirection direction for player to face</param>
-	private void Look (MazeDirection direction) {
+    private void Look(MazeDirection direction) {
 		transform.localRotation = direction.ToRotation();
-		currentDirection = direction;
+        currentDirection = direction;
 	}
 
     private void Update()
@@ -89,7 +91,11 @@ public class Player : MonoBehaviour {
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Collision entered...");
-        if (other.CompareTag("NPC"))
+        if (other.gameObject.CompareTag("Door"))
+        {
+            AudioManager.instance.PlaySFX(AudioManager.instance.openDoor);
+        }
+        else if (other.CompareTag("NPC"))
         {
             Debug.Log("Collided with NPC");
         }
@@ -97,8 +103,12 @@ public class Player : MonoBehaviour {
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("Collision exited");
-        if (other.CompareTag("NPC"))
+        Debug.Log("Collision exited...");
+        if (other.gameObject.CompareTag("Door"))
+        {
+            AudioManager.instance.PlaySFX(AudioManager.instance.closeDoor);
+        }
+        else if (other.CompareTag("NPC"))
         {
             Debug.Log("Exited collision with NPC");
         }

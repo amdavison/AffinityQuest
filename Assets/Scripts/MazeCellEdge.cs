@@ -15,7 +15,7 @@ public abstract class MazeCellEdge : MonoBehaviour {
     /// <param name="cell">MazeCell current cell</param>
     /// <param name="otherCell">MazeCell neighbor</param>
     /// <param name="direction">MazeDirection direction of edge</param>
-	public virtual void Initialize (MazeCell cell, MazeCell otherCell, MazeDirection direction) {
+	public virtual void Initialize(MazeCell cell, MazeCell otherCell, MazeDirection direction) {
 		this.cell = cell;
 		this.otherCell = otherCell;
 		this.direction = direction;
@@ -25,7 +25,7 @@ public abstract class MazeCellEdge : MonoBehaviour {
 		transform.localRotation = direction.ToRotation();
 	}
 
-	public virtual void OnPlayerEntered () {}
+	public virtual void OnPlayerEntered() {}
 
-	public virtual void OnPlayerExited () {}
+	public virtual void OnPlayerExited() {}
 }

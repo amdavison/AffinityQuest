@@ -25,7 +25,7 @@ public class MazeDoor : MazePassage {
     /// <param name="primary">MazeCell primary cell</param>
     /// <param name="other">MazeCell secondary neighbor</param>
     /// <param name="direction">MazeDirection direction of door instance for primary cell</param>
-	public override void Initialize (MazeCell primary, MazeCell other, MazeDirection direction) {
+	public override void Initialize(MazeCell primary, MazeCell other, MazeDirection direction) {
 		base.Initialize(primary, other, direction);
 		if (OtherSideOfDoor != null) {
 			isMirrored = true;
@@ -46,7 +46,7 @@ public class MazeDoor : MazePassage {
 	/// <summary>
     /// Opens door and shows neighboring room.
     /// </summary>
-	public override void OnPlayerEntered () {
+	public override void OnPlayerEntered() {
 		OtherSideOfDoor.hinge.localRotation = hinge.localRotation = isMirrored ? mirroredRotation : normalRotation;
 		OtherSideOfDoor.cell.room.Show();
 		
@@ -55,32 +55,8 @@ public class MazeDoor : MazePassage {
 	/// <summary>
     /// Closes door.
     /// </summary>
-	public override void OnPlayerExited () {
+	public override void OnPlayerExited() {
 		OtherSideOfDoor.hinge.localRotation = hinge.localRotation = Quaternion.identity;
 		//OtherSideOfDoor.cell.room.Hide();
 	}
-
-	/// <summary>
-    /// Handles playing of open door SFX when player collider enters trigger.
-    /// </summary>
-    /// <param name="other">Collider collider component of other game object</param>
-	private void OnTriggerEnter(Collider other)
-    {
-		if (other.gameObject.CompareTag("Player"))
-        {
-			AudioManager.instance.PlaySFX(AudioManager.instance.openDoor);
-		}
-	}
-
-	/// <summary>
-    /// Handles playing of close door SFX when player collider exits trigger.
-    /// </summary>
-    /// <param name="other">Collider collider component of other game object</param>
-	private void OnTriggerExit(Collider other)
-    {
-		if (other.gameObject.CompareTag("Player"))
-		{
-			AudioManager.instance.PlaySFX(AudioManager.instance.closeDoor);
-		}
-    }
 }
