@@ -12,7 +12,10 @@ public class NPC : MonoBehaviour
     {
         dialogs = GameManager.instance.NPCs(npcType);
         Debug.Log("Dialogs size should be 3: " + dialogs.Count);
-        Debug.Log(dialogs.ToString());
+        foreach (NPCData npc in dialogs)
+        {
+            Debug.Log("NPCType: " + npc.npcType + ", Greeting: " + npc.greeting + ", Options: " + npc.opt1 + ", " + npc.opt2 + ", " + npc.opt3);
+        }
     }
 
     // Update is called once per frame
