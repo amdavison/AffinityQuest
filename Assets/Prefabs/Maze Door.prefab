@@ -676,7 +676,7 @@ GameObject:
   - component: {fileID: 275409314038358685}
   m_Layer: 0
   m_Name: Maze Door
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -717,8 +717,6 @@ MonoBehaviour:
   otherCell: {fileID: 0}
   direction: 0
   hinge: {fileID: 400004}
-  openDoor: {fileID: 8300000, guid: fe04eceea7d254e459491a324fbb4878, type: 3}
-  closeDoor: {fileID: 8300000, guid: 43ee970ca1f8046e08fcd62444401446, type: 3}
 --- !u!65 &275409314038358685
 BoxCollider:
   m_ObjectHideFlags: 0
