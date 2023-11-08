@@ -10,7 +10,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource SFXSource;
 
     [Header("Audio Clip")]
-    public AudioClip background;
+    public AudioClip mainMenu;
     public AudioClip gamePlay;
     public AudioClip transition;
     public AudioClip openDoor;
@@ -24,7 +24,7 @@ public class AudioManager : MonoBehaviour
     private void Start()
     {
         instance = this;
-        PlayBackground(background);
+        PlayBackground(mainMenu);
     }
 
     /// <summary>
@@ -33,7 +33,7 @@ public class AudioManager : MonoBehaviour
     /// <param name="clip">AudioClip clip of new audio</param>
     public void PlayBackground(AudioClip clip)
     {
-        background = musicSource.clip = clip;
+        musicSource.clip = clip;
         musicSource.Play();
     }
 
