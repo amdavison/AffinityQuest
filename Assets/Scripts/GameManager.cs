@@ -23,9 +23,9 @@ public class GameManager : MonoBehaviour
         {
 			Destroy(gameObject);
         }
-    }
 
-    private void Start () { LoadData(); }
+        LoadData();
+    }
 
     /// <summary>
     /// Loads csv file data.
@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
 	public LinkedList<NPCData> NPCs(NPCType npcType)
     {
 		List<NPCData> npcsOfType = npcs.Where(npc => npc.npcType == npcType).ToList();
-		Shuffle(npcsOfType);
-		return new LinkedList<NPCData>(npcsOfType);
+        Shuffle(npcsOfType);
+        return new LinkedList<NPCData>(npcsOfType);
     }
 }
