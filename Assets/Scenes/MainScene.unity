@@ -1394,7 +1394,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 971447526}
   SFXSource: {fileID: 1889382237}
-  background: {fileID: 8300000, guid: 417a699fdcebc45a2a0455997e6115fe, type: 3}
+  mainMenu: {fileID: 8300000, guid: 417a699fdcebc45a2a0455997e6115fe, type: 3}
   gamePlay: {fileID: 8300000, guid: b8876d9e9fbc14c17a91434e4f0a152a, type: 3}
   transition: {fileID: 8300000, guid: ab9ac488bfa9a4afe97723e9eae302b7, type: 3}
   openDoor: {fileID: 8300000, guid: fe04eceea7d254e459491a324fbb4878, type: 3}
