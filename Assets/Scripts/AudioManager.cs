@@ -15,9 +15,10 @@ public class AudioManager : MonoBehaviour
     public AudioClip transition;
     public AudioClip openDoor;
     public AudioClip closeDoor;
-    //public AudioClip buttonClick;
-    //public AudioClip portalOpen;
-    //public AudioClip dialog;
+    public AudioClip npc;
+    public AudioClip dialog;
+    public AudioClip buttonClick;
+    public AudioClip portalOpen;
 
     public static AudioManager instance;
 
