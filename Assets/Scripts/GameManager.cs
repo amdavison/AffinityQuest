@@ -10,7 +10,17 @@ public class GameManager : MonoBehaviour
 {
 	public static GameManager instance;
 
+    public static int interactionCount = 0;
+
+    public static int correctCount = 0;
+
+    public static NPC ActiveNPC { get; set; }
+
+    public static bool isInactive = false;
+
 	private List<NPCData> npcs = new();
+
+    private float timeRemaining = 10f;
 
     private void Awake()
     {
@@ -25,6 +35,22 @@ public class GameManager : MonoBehaviour
         }
 
         LoadData();
+    }
+
+    private void Update()
+    {
+        if (isInactive == true && timeRemaining > 0)
+        {
+            timeRemaining -= Time.deltaTime;
+        }
+
+        if (timeRemaining <= 0)
+        {
+            ActiveNPC.gameObject.SetActive(true);
+            ActiveNPC = null;
+            timeRemaining = 10f;
+            isInactive = false;
+        }
     }
 
     /// <summary>
@@ -61,7 +87,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <typeparam name="T">Specifies the element type of list</typeparam>
     /// <param name="inputList">List<T> list of items of type T to bre shuffled</param>
-	private void Shuffle<T>(List<T> inputList)
+	public void Shuffle<T>(List<T> inputList)
     {
 		for (int i = 0; i < inputList.Count - 1; i++)
         {
