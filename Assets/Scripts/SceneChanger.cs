@@ -9,10 +9,11 @@ public class SceneChanger : MonoBehaviour
 {
     private FadeInOut fade;
 
-    public AudioClip transition;
+    public static SceneChanger instance;
 
     private void Start()
     {
+        instance = this;
         fade = FindFirstObjectByType<FadeInOut>();
     }
 
@@ -34,7 +35,7 @@ public class SceneChanger : MonoBehaviour
     {
         // call fade and play transition clip
         fade.FadeIn();
-        AudioManager.instance.PlayBackground(transition);
+        AudioManager.instance.PlayBackground(AudioManager.instance.transition);
 
         // load scene
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(name);
