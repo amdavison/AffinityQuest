@@ -283,7 +283,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34a0fbfd48fad4c8a958be3361a2948b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transition: {fileID: 8300000, guid: ab9ac488bfa9a4afe97723e9eae302b7, type: 3}
 --- !u!4 &207363353
 Transform:
   m_ObjectHideFlags: 0
@@ -292,12 +291,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 207363351}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1468887239}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &281515137
 GameObject:
@@ -450,7 +449,6 @@ GameObject:
   - component: {fileID: 393978999}
   - component: {fileID: 393978998}
   - component: {fileID: 393978997}
-  - component: {fileID: 393979001}
   m_Layer: 5
   m_Name: UICanvas
   m_TagString: Untagged
@@ -544,28 +542,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!95 &393979001
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 393978996}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a5ddb91c79bbf4112944a5cde0b9be47, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &549108038
 GameObject:
   m_ObjectHideFlags: 0
@@ -1398,7 +1374,11 @@ MonoBehaviour:
   gamePlay: {fileID: 8300000, guid: b8876d9e9fbc14c17a91434e4f0a152a, type: 3}
   transition: {fileID: 8300000, guid: ab9ac488bfa9a4afe97723e9eae302b7, type: 3}
   openDoor: {fileID: 8300000, guid: fe04eceea7d254e459491a324fbb4878, type: 3}
-  closeDoor: {fileID: 8300000, guid: 43ee970ca1f8046e08fcd62444401446, type: 3}
+  closeDoor: {fileID: 8300000, guid: 226e2bf1326684ecbb72af46defb9e21, type: 3}
+  npc: {fileID: 8300000, guid: f8c7e44bb0b524ff78854d0a5a56f9e5, type: 3}
+  dialog: {fileID: 8300000, guid: c6c54688607dd45e4ac648de30477dd3, type: 3}
+  buttonClick: {fileID: 8300000, guid: 340c04ce9d70d4d828ea40449703d68e, type: 3}
+  portalOpen: {fileID: 8300000, guid: c2ec13878397d43d3995876ab715edf2, type: 3}
 --- !u!1 &1398006426
 GameObject:
   m_ObjectHideFlags: 0
@@ -1575,6 +1555,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1380964269}
+  - {fileID: 207363353}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1756568455
@@ -1904,6 +1885,5 @@ SceneRoots:
   - {fileID: 549108041}
   - {fileID: 393979000}
   - {fileID: 549266896}
-  - {fileID: 207363353}
   - {fileID: 785418982}
   - {fileID: 1468887239}
