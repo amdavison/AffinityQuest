@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,9 +7,12 @@ public class NPC : MonoBehaviour
 
     private LinkedList<NPCData> dialogs;
 
+    private int startCount;
+
     void Start()
     {
         dialogs = GameManager.instance.NPCs(npcType);
+        startCount = dialogs.Count;
         Debug.Log("Dialogs size should be 3: " + dialogs.Count);
         foreach (NPCData npc in dialogs)
         {
@@ -18,9 +20,15 @@ public class NPC : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// Retrieves NPCData from Linked List.
+    /// </summary>
+    /// <returns>NPCData data at head of Linked List</returns>
+    public NPCData GetNPCData()
     {
-        
+        NPCData data = dialogs.First.Value;
+        dialogs.RemoveFirst();
+        if (dialogs.Count == startCount - 1) { GameManager.interactionCount++; }
+        return data;
     }
 }
