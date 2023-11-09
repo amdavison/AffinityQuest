@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 /// <summary>
 /// Enum that represents game level.
 /// </summary>
