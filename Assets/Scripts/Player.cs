@@ -5,9 +5,23 @@
 /// </summary>
 public class Player : MonoBehaviour {
 
+    public bool canMove = true;
+
+    public static Player instance;
+
     private MazeCell currentCell;
 
 	private MazeDirection currentDirection;
+
+    private DialogText dialogText;
+
+    private NPC activeNPC = null;
+
+    private void Start()
+    {
+        instance = this;
+        dialogText = FindFirstObjectByType<DialogText>();
+    }
 
     /// <summary>
 	/// Sets local position of player to new cell position.
@@ -46,71 +60,72 @@ public class Player : MonoBehaviour {
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (canMove == true)
         {
-            Move(currentDirection);
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                Move(currentDirection);
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                Move(currentDirection.GetOpposite());
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                Look(currentDirection.GetNextCounterclockwise());
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                Look(currentDirection.GetNextClockwise());
+            }
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (activeNPC != null && Input.GetKeyDown(KeyCode.C))
         {
-            Move(currentDirection.GetOpposite());
+            canMove = false;
+            AudioManager.instance.PlaySFX(AudioManager.instance.npc);
+            dialogText.StartInteraction(activeNPC.GetNPCData());
         }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            Look(currentDirection.GetNextCounterclockwise());
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            Look(currentDirection.GetNextClockwise());
-        }
-        //if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
-        //{
-        //    Move(currentDirection);
-        //}
-        //else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
-        //{
-        //    Move(currentDirection.GetNextClockwise());
-        //}
-        //else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
-        //{
-        //    Move(currentDirection.GetOpposite());
-        //}
-        //else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
-        //{
-        //    Move(currentDirection.GetNextCounterclockwise());
-        //}
-        //else if (Input.GetKeyDown(KeyCode.Q))
-        //{
-        //    Look(currentDirection.GetNextCounterclockwise());
-        //}
-        //else if (Input.GetKeyDown(KeyCode.E))
-        //{
-        //    Look(currentDirection.GetNextClockwise());
-        //}
     }
 
+    /// <summary>
+    /// Event handler when trigger is entered.
+    /// </summary>
+    /// <param name="other">Collider other game object collider</param>
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Collision entered...");
-        if (other.gameObject.CompareTag("Door"))
+        if (other.CompareTag("Door"))
         {
             AudioManager.instance.PlaySFX(AudioManager.instance.openDoor);
         }
         else if (other.CompareTag("NPC"))
         {
             Debug.Log("Collided with NPC");
+            if (GameManager.ActiveNPC != null)
+            {
+                NPC npc = GameManager.ActiveNPC;
+                npc.gameObject.SetActive(true);
+            }
+            GameManager.ActiveNPC = activeNPC = other.GetComponent<NPC>();
+            dialogText.ShowHint();
         }
     }
 
+    /// <summary>
+    /// Event handler when trigger is exited.
+    /// </summary>
+    /// <param name="other">Collider other game object collider</param>
     private void OnTriggerExit(Collider other)
     {
         Debug.Log("Collision exited...");
-        if (other.gameObject.CompareTag("Door"))
+        if (other.CompareTag("Door"))
         {
             AudioManager.instance.PlaySFX(AudioManager.instance.closeDoor);
         }
         else if (other.CompareTag("NPC"))
         {
             Debug.Log("Exited collision with NPC");
+            activeNPC = null;
         }
     }
 }
