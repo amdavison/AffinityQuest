@@ -127,6 +127,12 @@ public class DialogText : MonoBehaviour
             StartCoroutine(DisplayDialog(npcData.incorrectDialog));
             npc.gameObject.SetActive(false);
         }
+
+        if (GameManager.interactionCount == GameManager.instance.darkNPCPrefabs.Count ||
+                GameManager.interactionCount == GameManager.instance.darkNPCPrefabs.Count + GameManager.instance.lightNPCPrefabs.Count)
+        {
+            GameManager.portalActivated = true;
+        }
         ToggleButtons();
     }
 
