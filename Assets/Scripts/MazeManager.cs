@@ -25,7 +25,17 @@ public class MazeManager : MonoBehaviour
 
 	}
 
-	private void Update()
+    private void OnEnable()
+    {
+		GameManager.instance.PortalActivated += ActivatePortal;
+    }
+
+    private void OnDisable()
+    {
+		GameManager.instance.PortalActivated -= ActivatePortal;
+    }
+
+    private void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
@@ -78,6 +88,8 @@ public class MazeManager : MonoBehaviour
 		AudioManager.instance.PlayBackground(AudioManager.instance.transition);
 		Camera.main.gameObject.AddComponent<AudioListener>();
 		StopAllCoroutines();
+		GameManager.portalActivated = false;
+		GameManager.hasPlayed = false;
 		Destroy(mazeInstance.gameObject);
 		if (playerInstance != null)
 		{
@@ -99,5 +111,16 @@ public class MazeManager : MonoBehaviour
 			npcInstance.transform.localPosition = spawnLocation.transform.localPosition;
 			npcInstance.transform.parent = spawnLocation.transform;
         }
+    }
+
+	/// <summary>
+    /// Activates portal for teleporting to another level.
+    /// </summary>
+	public void ActivatePortal()
+    {
+		Debug.Log("Activating portal...");
+        //portalInstance.SetActive(true);
+        AudioManager.instance.PlaySFX(AudioManager.instance.portalOpen);
+		GameManager.hasPlayed = true;
     }
 }

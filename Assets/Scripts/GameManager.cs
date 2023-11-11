@@ -18,9 +18,13 @@ public class GameManager : MonoBehaviour
     public static bool isInactive = false;
     public static Level level = Level.Dark;
     public static bool portalActivated = false;
+    public static bool hasPlayed = false;
 
 	private List<NPCData> npcs = new();
     private float timeRemaining = 10f;
+
+    public delegate void PortalActivatedHandler();
+    public event PortalActivatedHandler PortalActivated;
 
     private void Awake()
     {
@@ -50,6 +54,11 @@ public class GameManager : MonoBehaviour
             ActiveNPC = null;
             timeRemaining = 10f;
             isInactive = false;
+        }
+
+        if (portalActivated && !hasPlayed)
+        {
+            PortalActivated.Invoke();
         }
     }
 
