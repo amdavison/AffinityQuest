@@ -8,7 +8,6 @@ public class FadeInOut : MonoBehaviour
     public CanvasGroup canvasGroup;
     public bool fadein = false;
     public bool fadeout = false;
-
     public float timeToFade;
 
     private void Update()

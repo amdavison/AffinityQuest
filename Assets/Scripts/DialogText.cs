@@ -7,14 +7,11 @@ using TMPro;
 public class DialogText : MonoBehaviour
 {
     public float waitTime = 0.2f;
-
     public GameObject dialogPanel;
-
     public GameObject btnPanel;
-
     public List<Button> btns;
-
     public TextMeshProUGUI dialogText;
+    public TextMeshProUGUI hintText;
 
     private NPCData npcData;
 
@@ -29,6 +26,7 @@ public class DialogText : MonoBehaviour
     /// <param name="data">NPCData dialog data for NPC</param>
     public void StartInteraction(NPCData data)
     {
+        hintText.gameObject.SetActive(false);
         dialogPanel.SetActive(true);
         dialogText.text = string.Empty;
         npcData = data;
@@ -64,8 +62,8 @@ public class DialogText : MonoBehaviour
     /// </summary>
     public void ShowHint()
     {
-        // TODO: Add functionality for displaying hint to user.
-        Debug.Log("ShowHint...");
+        hintText.gameObject.SetActive(true);
+        StartCoroutine(FlashText());
     }
 
     /// <summary>
@@ -157,18 +155,27 @@ public class DialogText : MonoBehaviour
     /// </summary>
     private void ToggleButtons()
     {
-        foreach (Button btn in btns)
+        btns[0].GetComponentInChildren<TextMeshProUGUI>().text = "Continue Quest";
+
+        for (int i = 1; i < btns.Count; i++)
         {
-            TextMeshProUGUI btnText = btn.GetComponentInChildren<TextMeshProUGUI>();
-            if (btnText.text == npcData.opt1)
-            {
-                btnText.text = "Continue Quest";
-            }
-            else
-            {
-                btnText.text = string.Empty;
-                btn.interactable = false;
-            }
+            btns[i].GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
+            btns[i].interactable = false;
+        }
+    }
+
+    /// <summary>
+    /// Flashes hint text.
+    /// </summary>
+    /// <returns>IEnumerator wait time</returns>
+    private IEnumerator FlashText()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            hintText.alpha = 0.0f;
+            yield return new WaitForSeconds(0.3f);
+            hintText.alpha = 1.0f;
+            yield return new WaitForSeconds(0.3f);
         }
     }
 }

@@ -7,23 +7,18 @@ using UnityEngine;
 /// </summary>
 public class MazeManager : MonoBehaviour
 {
-	public Maze mazePrefab;
+    public Maze mazePrefab;
+    public Player playerPrefab;
+    public GameObject portalPrefab;
 
-	public Player playerPrefab;
+    private Maze mazeInstance;
+    private Player playerInstance;
+    private GameObject portalInstance;
+    private FadeInOut fade;
 
-	public GameObject portalPrefab;
+    public GameObject Portal { get; }
 
-	private Maze mazeInstance;
-
-	private Player playerInstance;
-
-	private GameObject portalInstance;
-
-	public GameObject Portal { get; }
-
-	private FadeInOut fade;
-
-	private void Start()
+    private void Start()
 	{
 		fade = FindFirstObjectByType<FadeInOut>();
 		StartCoroutine(BeginGame());
@@ -38,6 +33,9 @@ public class MazeManager : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+    /// Updates current game level or loads final scene on completion of a level.
+    /// </summary>
 	public void LevelComplete()
     {
 		if (GameManager.level == Level.Dark)
@@ -51,21 +49,21 @@ public class MazeManager : MonoBehaviour
         }
     }
 
-	/// <summary>
-	/// Initializes and starts new game.
-	/// </summary>
-	/// <returns>IEnumerator mazeInstance generation</returns>
-	private IEnumerator BeginGame()
+    /// <summary>
+    /// Initializes and starts new game.
+    /// </summary>
+    /// <returns>IEnumerator mazeInstance generation</returns>
+    private IEnumerator BeginGame()
 	{
 		mazeInstance = Instantiate(mazePrefab) as Maze;
 		yield return StartCoroutine(mazeInstance.Generate());
 		playerInstance = Instantiate(playerPrefab) as Player;
 		//portalInstance = Instantiate(portalPrefab);
 		MazeCell initialCell = mazeInstance.GetCell(mazeInstance.RandomCoordinates);
-		//portalInstance.transform.localPosition = initialCell.transform.localPosition;
-		//portalInstance.SetActive(false);
-		playerInstance.SetLocation(initialCell);
-		SpawnNPCs();
+        //portalInstance.transform.localPosition = initialCell.transform.localPosition;
+        //portalInstance.SetActive(false);
+        playerInstance.SetLocation(initialCell);
+        SpawnNPCs();
 		Destroy(Camera.main.GetComponent<AudioListener>());
 		fade.FadeOut();
 		AudioManager.instance.PlayBackground(AudioManager.instance.gamePlay);
@@ -93,12 +91,13 @@ public class MazeManager : MonoBehaviour
     /// </summary>
 	public void SpawnNPCs()
     {
-		List<GameObject> npcPrefabs = GameManager.instance.NPCs();
+		List<GameObject> npcPrefabs = GameManager.instance.GetLevelNPCs();
 		foreach (GameObject npc in npcPrefabs)
         {
 			MazeCell spawnLocation = mazeInstance.GetCell(mazeInstance.RandomCoordinates);
 			GameObject npcInstance = Instantiate(npc);
 			npcInstance.transform.localPosition = spawnLocation.transform.localPosition;
+			npcInstance.transform.parent = spawnLocation.transform;
         }
     }
 }

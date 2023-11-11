@@ -5,27 +5,18 @@ using System.Collections.Generic;
 /// <summary>
 /// Manages creation of maze instance.
 /// </summary>
-public class Maze : MonoBehaviour {
-
+public class Maze : MonoBehaviour
+{
 	public IntVector2 size;
-
 	public MazeCell cellPrefab;
-
 	public float generationStepDelay;
-
 	public MazePassage passagePrefab;
-
 	public MazeDoor doorPrefab;
-
-	[Range(0f, 1f)]
-	public float doorProbability;
-
+	[Range(0f, 1f)] public float doorProbability;
 	public MazeWall[] wallPrefabs;
-
 	public MazeRoomSettings[] roomSettings;
 
 	private MazeCell[,] cells;
-
 	private List<MazeRoom> rooms = new List<MazeRoom>();
 
 	public IntVector2 RandomCoordinates {

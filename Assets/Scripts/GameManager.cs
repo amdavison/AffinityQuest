@@ -8,18 +8,18 @@ using System.Linq;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
+    public List<GameObject> darkNPCPrefabs;
+    public List<GameObject> lightNPCPrefabs;
+
 	public static GameManager instance;
-
     public static int interactionCount = 0;
-
     public static int correctCount = 0;
-
     public static NPC ActiveNPC { get; set; }
-
     public static bool isInactive = false;
+    public static Level level = Level.Dark;
+    public static bool portalActivated = false;
 
 	private List<NPCData> npcs = new();
-
     private float timeRemaining = 10f;
 
     private void Awake()
@@ -108,5 +108,14 @@ public class GameManager : MonoBehaviour
 		List<NPCData> npcsOfType = npcs.Where(npc => npc.npcType == npcType).ToList();
         Shuffle(npcsOfType);
         return new LinkedList<NPCData>(npcsOfType);
+    }
+
+    /// <summary>
+    /// Returns list of NPC prefabs according to game level setting.
+    /// </summary>
+    /// <returns>List<GameObject> list of NPC prefabs</GameObject></returns>
+    public List<GameObject> GetLevelNPCs()
+    {
+        return level == Level.Dark ? darkNPCPrefabs : lightNPCPrefabs;
     }
 }

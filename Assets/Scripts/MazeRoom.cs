@@ -4,13 +4,12 @@ using System.Collections.Generic;
 /// <summary>
 /// Maze room scriptable object.
 /// </summary>
-public class MazeRoom : ScriptableObject {
+public class MazeRoom : ScriptableObject
+{
+    public int settingsIndex;
+    public MazeRoomSettings settings;
 
-	public int settingsIndex;
-
-	public MazeRoomSettings settings;
-	
-	private List<MazeCell> cells = new List<MazeCell>();
+    private readonly List<MazeCell> cells = new();
 
 	/// <summary>
     /// Adds room cells to list of cells for room.

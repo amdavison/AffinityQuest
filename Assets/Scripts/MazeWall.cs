@@ -3,8 +3,8 @@
 /// <summary>
 /// Concrete maze wall edge.
 /// </summary>
-public class MazeWall : MazeCellEdge {
-
+public class MazeWall : MazeCellEdge
+{
 	public Transform wall;
 
 	/// <summary>

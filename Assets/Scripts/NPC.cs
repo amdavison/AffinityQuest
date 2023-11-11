@@ -6,7 +6,6 @@ public class NPC : MonoBehaviour
     public NPCType npcType;
 
     private LinkedList<NPCData> dialogs;
-
     private int startCount;
 
     void Start()

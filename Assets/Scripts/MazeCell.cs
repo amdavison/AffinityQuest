@@ -3,14 +3,12 @@
 /// <summary>
 /// Manages creation of maze cell instance.
 /// </summary>
-public class MazeCell : MonoBehaviour {
-
+public class MazeCell : MonoBehaviour
+{
 	public IntVector2 coordinates;
-
 	public MazeRoom room;
 
-	private MazeCellEdge[] edges = new MazeCellEdge[MazeDirections.Count];
-
+    private readonly MazeCellEdge[] edges = new MazeCellEdge[MazeDirections.Count];
 	private int initializedEdgeCount;
 
 	public bool IsFullyInitialized {

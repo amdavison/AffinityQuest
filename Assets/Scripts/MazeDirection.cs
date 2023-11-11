@@ -3,7 +3,8 @@
 /// <summary>
 /// Maze Direction enum.
 /// </summary>
-public enum MazeDirection {
+public enum MazeDirection
+{
 	North,
 	East,
 	South,
@@ -13,8 +14,8 @@ public enum MazeDirection {
 /// <summary>
 /// Static maze directions object.
 /// </summary>
-public static class MazeDirections {
-
+public static class MazeDirections
+{
 	public const int Count = 4;
 
 	public static MazeDirection RandomValue {

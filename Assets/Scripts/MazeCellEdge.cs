@@ -3,10 +3,9 @@
 /// <summary>
 /// Abstract cell edge object.
 /// </summary>
-public abstract class MazeCellEdge : MonoBehaviour {
-
-	public MazeCell cell, otherCell;
-
+public abstract class MazeCellEdge : MonoBehaviour
+{
+    public MazeCell cell, otherCell;
 	public MazeDirection direction;
 
 	/// <summary>

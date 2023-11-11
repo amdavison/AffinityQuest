@@ -2,8 +2,8 @@
 /// Vector2 structure that uses integers.
 /// </summary>
 [System.Serializable]
-public struct IntVector2 {
-
+public struct IntVector2
+{
 	public int x, z;
 
 	/// <summary>

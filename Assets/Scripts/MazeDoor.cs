@@ -3,15 +3,14 @@
 /// <summary>
 /// Concrete maze door passage object.
 /// </summary>
-public class MazeDoor : MazePassage {
+public class MazeDoor : MazePassage
+{
+    public Transform hinge;
 
 	private static Quaternion
 		normalRotation = Quaternion.Euler(0f, -90f, 0f),
-		mirroredRotation = Quaternion.Euler(0f, 90f, 0f);
-
-	public Transform hinge;
-
-	private bool isMirrored;
+        mirroredRotation = Quaternion.Euler(0f, 90f, 0f);
+    private bool isMirrored;
 
 	private MazeDoor OtherSideOfDoor {
 		get {

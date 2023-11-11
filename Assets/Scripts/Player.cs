@@ -3,24 +3,21 @@
 /// <summary>
 /// Player controller.
 /// </summary>
-public class Player : MonoBehaviour {
-
+public class Player : MonoBehaviour
+{
     public bool canMove = true;
 
     public static Player instance;
 
     private MazeCell currentCell;
-
 	private MazeDirection currentDirection;
-
-    private DialogText dialogText;
-
+    private DialogText dialog;
     private NPC activeNPC = null;
 
     private void Start()
     {
         instance = this;
-        dialogText = FindFirstObjectByType<DialogText>();
+        dialog = FindFirstObjectByType<DialogText>();
     }
 
     /// <summary>
@@ -83,7 +80,7 @@ public class Player : MonoBehaviour {
         {
             canMove = false;
             AudioManager.instance.PlaySFX(AudioManager.instance.npc);
-            dialogText.StartInteraction(activeNPC.GetNPCData());
+            dialog.StartInteraction(activeNPC.GetNPCData());
         }
     }
 
@@ -107,7 +104,7 @@ public class Player : MonoBehaviour {
                 npc.gameObject.SetActive(true);
             }
             GameManager.ActiveNPC = activeNPC = other.GetComponent<NPC>();
-            dialogText.ShowHint();
+            dialog.ShowHint();
         }
     }
 
@@ -126,6 +123,7 @@ public class Player : MonoBehaviour {
         {
             Debug.Log("Exited collision with NPC");
             activeNPC = null;
+            dialog.hintText.gameObject.SetActive(false);
         }
     }
 }
