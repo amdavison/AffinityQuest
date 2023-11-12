@@ -1,7 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Manages Main menu.
+/// </summary>
 public class MenuManager : MonoBehaviour
 {
     public SceneChanger sceneChanger;
@@ -12,7 +13,6 @@ public class MenuManager : MonoBehaviour
     public void StartQuest()
     {
         AudioManager.instance.PlaySFX(AudioManager.instance.buttonClick);
-        Debug.Log("Starting quest!");
         sceneChanger.LoadScene("GameScene");
     }
 
@@ -22,7 +22,6 @@ public class MenuManager : MonoBehaviour
     public void QuitGame()
     {
         AudioManager.instance.PlaySFX(AudioManager.instance.buttonClick);
-        Debug.Log("Quitting application!");
         Application.Quit();
     }
 }
