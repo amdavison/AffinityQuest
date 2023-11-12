@@ -12,6 +12,7 @@ public class AudioManager : MonoBehaviour
     [Header("Audio Clip")]
     public AudioClip mainMenu;
     public AudioClip gamePlay;
+    public AudioClip finale;
     public AudioClip transition;
     public AudioClip openDoor;
     public AudioClip closeDoor;
