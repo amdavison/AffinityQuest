@@ -13,18 +13,35 @@ public class GameManager : MonoBehaviour
 
 	public static GameManager instance;
     public static int interactionCount = 0;
+    public static int questionsAsked = 0;
     public static int correctCount = 0;
     public static NPC ActiveNPC { get; set; }
     public static bool isInactive = false;
     public static Level level = Level.Dark;
     public static bool portalActivated = false;
-    public static bool hasPlayed = false;
+    public static bool SFXHasPlayed = false;
 
 	private List<NPCData> npcs = new();
-    private float timeRemaining = 10f;
+    private float timeRemaining = 5f;
 
     public delegate void PortalActivatedHandler();
     public event PortalActivatedHandler PortalActivated;
+
+    public int TotalInteractions
+    {
+        get
+        {
+            return level == Level.Dark ? darkNPCPrefabs.Count : darkNPCPrefabs.Count + lightNPCPrefabs.Count;
+        }
+    }
+
+    public List<GameObject> LevelNPCs
+    {
+        get
+        {
+            return level == Level.Dark ? darkNPCPrefabs : lightNPCPrefabs;
+        }
+    }
 
     private void Awake()
     {
@@ -43,7 +60,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (isInactive == true && timeRemaining > 0)
+        if (isInactive == true && timeRemaining > 0 && ActiveNPC.Data != null)
         {
             timeRemaining -= Time.deltaTime;
         }
@@ -51,12 +68,12 @@ public class GameManager : MonoBehaviour
         if (timeRemaining <= 0)
         {
             ActiveNPC.gameObject.SetActive(true);
-            ActiveNPC = null;
-            timeRemaining = 10f;
+            timeRemaining = 5f;
             isInactive = false;
         }
 
-        if (portalActivated && !hasPlayed)
+        // Check if portal needs to be activated
+        if (portalActivated && !SFXHasPlayed)
         {
             PortalActivated.Invoke();
         }
@@ -117,14 +134,5 @@ public class GameManager : MonoBehaviour
 		List<NPCData> npcsOfType = npcs.Where(npc => npc.npcType == npcType).ToList();
         Shuffle(npcsOfType);
         return new LinkedList<NPCData>(npcsOfType);
-    }
-
-    /// <summary>
-    /// Returns list of NPC prefabs according to game level setting.
-    /// </summary>
-    /// <returns>List<GameObject> list of NPC prefabs</GameObject></returns>
-    public List<GameObject> GetLevelNPCs()
-    {
-        return level == Level.Dark ? darkNPCPrefabs : lightNPCPrefabs;
     }
 }
