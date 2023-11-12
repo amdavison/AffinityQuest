@@ -26,6 +26,7 @@ public class DialogText : MonoBehaviour
     /// <param name="data">NPCData dialog data for NPC</param>
     public void StartInteraction(NPCData data)
     {
+        GameManager.questionsAsked++;
         hintText.gameObject.SetActive(false);
         dialogPanel.SetActive(true);
         dialogText.text = string.Empty;
@@ -105,17 +106,17 @@ public class DialogText : MonoBehaviour
     {
         AudioManager.instance.PlaySFX(AudioManager.instance.buttonClick);
 
+        // get the active NPC from GameManager
         NPC npc = GameManager.ActiveNPC;
 
         if (btnText.text == "Continue Quest")
         {
-            Debug.Log("Continuing quest...");
+            StopAllCoroutines();
             EndInteraction();
             return;
         }
         else if (btnText.text == npcData.opt1)
         {
-            Debug.Log("Correct answer");
             GameManager.correctCount++;
             StartCoroutine(DisplayDialog(npcData.correctDialog));
             npc.gameObject.SetActive(false);
@@ -123,16 +124,11 @@ public class DialogText : MonoBehaviour
         }
         else
         {
-            Debug.Log("Incorrect answer");
             StartCoroutine(DisplayDialog(npcData.incorrectDialog));
             npc.gameObject.SetActive(false);
         }
 
-        if (GameManager.interactionCount == GameManager.instance.darkNPCPrefabs.Count ||
-                GameManager.interactionCount == GameManager.instance.darkNPCPrefabs.Count + GameManager.instance.lightNPCPrefabs.Count)
-        {
-            GameManager.portalActivated = true;
-        }
+        GameManager.portalActivated = GameManager.interactionCount == GameManager.instance.TotalInteractions;
         ToggleButtons();
     }
 
