@@ -20,25 +20,25 @@ public class SceneChanger : MonoBehaviour
     /// <summary>
     /// Loads new level.
     /// </summary>
-    /// <param name="name">string name of level to load</param>
-    public void LoadScene(string name)
+    /// <param sceneName="sceneName">string name of level to load</param>
+    public void LoadScene(string sceneName)
     {
-        StartCoroutine(LoadAsyncScene(name));
+        StartCoroutine(LoadAsyncScene(sceneName));
     }
 
     /// <summary>
     /// Controls fade out between levels.
     /// </summary>
-    /// <param name="name">string name of level to load</param>
+    /// <param sceneName="sceneName">string name of level to load</param>
     /// <returns>IEnumerator transition time</returns>
-    private IEnumerator LoadAsyncScene(string name)
+    private IEnumerator LoadAsyncScene(string sceneName)
     {
         // call fade and play transition clip
         fade.FadeIn();
         AudioManager.instance.PlayBackground(AudioManager.instance.transition);
 
         // load scene
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(name);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
 
         while (!asyncLoad.isDone)
         {
