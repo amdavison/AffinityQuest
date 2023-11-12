@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
 
     public static Player instance;
 
+    private MazeManager mazeManager;
     private MazeCell currentCell;
 	private MazeDirection currentDirection;
     private DialogText dialog;
@@ -18,6 +19,7 @@ public class Player : MonoBehaviour
     {
         instance = this;
         dialog = FindFirstObjectByType<DialogText>();
+        mazeManager = FindFirstObjectByType<MazeManager>();
     }
 
     /// <summary>
@@ -90,21 +92,18 @@ public class Player : MonoBehaviour
     /// <param name="other">Collider other game object collider</param>
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Collision entered...");
         if (other.CompareTag("Door"))
         {
             AudioManager.instance.PlaySFX(AudioManager.instance.openDoor);
         }
         else if (other.CompareTag("NPC"))
         {
-            Debug.Log("Collided with NPC");
-            if (GameManager.ActiveNPC != null)
-            {
-                NPC npc = GameManager.ActiveNPC;
-                npc.gameObject.SetActive(true);
-            }
             GameManager.ActiveNPC = activeNPC = other.GetComponent<NPC>();
             dialog.ShowHint();
+        }
+        else if (other.CompareTag("Portal"))
+        {
+            mazeManager.LevelComplete();
         }
     }
 
@@ -114,14 +113,12 @@ public class Player : MonoBehaviour
     /// <param name="other">Collider other game object collider</param>
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("Collision exited...");
         if (other.CompareTag("Door"))
         {
             AudioManager.instance.PlaySFX(AudioManager.instance.closeDoor);
         }
         else if (other.CompareTag("NPC"))
         {
-            Debug.Log("Exited collision with NPC");
             activeNPC = null;
             dialog.hintText.gameObject.SetActive(false);
         }
