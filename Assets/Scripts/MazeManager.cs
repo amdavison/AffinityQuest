@@ -35,14 +35,6 @@ public class MazeManager : MonoBehaviour
 		GameManager.instance.PortalActivated -= ActivatePortal;
     }
 
-    private void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.Space))
-		{
-			LevelComplete();
-		}
-	}
-
 	/// <summary>
     /// Updates current game level or loads final scene on completion of a level.
     /// </summary>
@@ -68,10 +60,10 @@ public class MazeManager : MonoBehaviour
 		mazeInstance = Instantiate(mazePrefab) as Maze;
 		yield return StartCoroutine(mazeInstance.Generate());
 		playerInstance = Instantiate(playerPrefab) as Player;
-		//portalInstance = Instantiate(portalPrefab);
+		portalInstance = Instantiate(portalPrefab);
 		MazeCell initialCell = mazeInstance.GetCell(mazeInstance.RandomCoordinates);
-        //portalInstance.transform.localPosition = initialCell.transform.localPosition;
-        //portalInstance.SetActive(false);
+        portalInstance.transform.localPosition = initialCell.transform.localPosition + new Vector3(0, 0.03f, 0);
+        portalInstance.SetActive(false);
         playerInstance.SetLocation(initialCell);
         SpawnNPCs();
 		Destroy(Camera.main.GetComponent<AudioListener>());
@@ -89,12 +81,16 @@ public class MazeManager : MonoBehaviour
 		Camera.main.gameObject.AddComponent<AudioListener>();
 		StopAllCoroutines();
 		GameManager.portalActivated = false;
-		GameManager.hasPlayed = false;
+		GameManager.SFXHasPlayed = false;
 		Destroy(mazeInstance.gameObject);
 		if (playerInstance != null)
 		{
 			Destroy(playerInstance.gameObject);
 		}
+		if (portalInstance != null)
+        {
+			Destroy(portalInstance.gameObject);
+        }
 		StartCoroutine(BeginGame());
 	}
 
@@ -103,7 +99,8 @@ public class MazeManager : MonoBehaviour
     /// </summary>
 	public void SpawnNPCs()
     {
-		List<GameObject> npcPrefabs = GameManager.instance.GetLevelNPCs();
+        List<GameObject> npcPrefabs = GameManager.instance.LevelNPCs;
+
 		foreach (GameObject npc in npcPrefabs)
         {
 			MazeCell spawnLocation = mazeInstance.GetCell(mazeInstance.RandomCoordinates);
@@ -118,9 +115,8 @@ public class MazeManager : MonoBehaviour
     /// </summary>
 	public void ActivatePortal()
     {
-		Debug.Log("Activating portal...");
-        //portalInstance.SetActive(true);
+		portalInstance.SetActive(true);
         AudioManager.instance.PlaySFX(AudioManager.instance.portalOpen);
-		GameManager.hasPlayed = true;
+		GameManager.SFXHasPlayed = true;
     }
 }
