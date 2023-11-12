@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
                 Look(currentDirection.GetNextClockwise());
             }
         }
-        if (activeNPC != null && Input.GetKeyDown(KeyCode.C))
+        if (activeNPC != null && Input.GetKeyDown(KeyCode.Space))
         {
             canMove = false;
             AudioManager.instance.PlaySFX(AudioManager.instance.npc);
