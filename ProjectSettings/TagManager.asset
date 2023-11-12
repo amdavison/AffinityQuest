@@ -6,6 +6,7 @@ TagManager:
   tags:
   - NPC
   - Door
+  - Portal
   layers:
   - Default
   - TransparentFX
