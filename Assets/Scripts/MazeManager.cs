@@ -118,5 +118,6 @@ public class MazeManager : MonoBehaviour
 		portalInstance.SetActive(true);
         AudioManager.instance.PlaySFX(AudioManager.instance.portalOpen);
 		GameManager.SFXHasPlayed = true;
+		portalInstance.GetComponent<AudioSource>().Play();
     }
 }
