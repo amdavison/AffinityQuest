@@ -20,6 +20,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip dialog;
     public AudioClip buttonClick;
     public AudioClip portalOpen;
+    public AudioClip correct;
+    public AudioClip incorrect;
 
     public static AudioManager instance;
 
