@@ -6,18 +6,32 @@ using TMPro;
 
 public class DialogText : MonoBehaviour
 {
+    [Header("Collectables")]
+    [SerializeField] private GameObject sad;
+    [SerializeField] private GameObject angry;
+    [SerializeField] private GameObject scared;
+    [SerializeField] private GameObject happy;
+    [SerializeField] private GameObject strong;
+    [SerializeField] private GameObject calm;
+
     public float waitTime = 0.2f;
     public GameObject dialogPanel;
     public GameObject btnPanel;
     public List<Button> btns;
     public TextMeshProUGUI dialogText;
     public TextMeshProUGUI hintText;
+    public TextMeshProUGUI portalText;
 
     private NPCData npcData;
 
     private void Start()
     {
         dialogText.text = string.Empty;
+    }
+
+    private void Update()
+    {
+        portalText.gameObject.SetActive(GameManager.portalActivated);
     }
 
     /// <summary>
@@ -64,7 +78,7 @@ public class DialogText : MonoBehaviour
     public void ShowHint()
     {
         hintText.gameObject.SetActive(true);
-        StartCoroutine(FlashText());
+        StartCoroutine(FlashHint());
     }
 
     /// <summary>
@@ -117,6 +131,8 @@ public class DialogText : MonoBehaviour
         }
         else if (btnText.text == npcData.opt1)
         {
+            AudioManager.instance.PlaySFX(AudioManager.instance.correct);
+            ShowCollectable(npcData.npcType);
             GameManager.correctCount++;
             StartCoroutine(DisplayDialog(npcData.correctDialog));
             npc.gameObject.SetActive(false);
@@ -124,11 +140,13 @@ public class DialogText : MonoBehaviour
         }
         else
         {
+            AudioManager.instance.PlaySFX(AudioManager.instance.incorrect);
             StartCoroutine(DisplayDialog(npcData.incorrectDialog));
             npc.gameObject.SetActive(false);
         }
 
         GameManager.portalActivated = GameManager.interactionCount == GameManager.instance.TotalInteractions;
+
         ToggleButtons();
     }
 
@@ -170,7 +188,7 @@ public class DialogText : MonoBehaviour
     /// Flashes hint text.
     /// </summary>
     /// <returns>IEnumerator wait time</returns>
-    private IEnumerator FlashText()
+    private IEnumerator FlashHint()
     {
         for (int i = 0; i < 3; i++)
         {
@@ -178,6 +196,33 @@ public class DialogText : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
             hintText.alpha = 1.0f;
             yield return new WaitForSeconds(0.3f);
+        }
+    }
+
+    private void ShowCollectable(NPCType npcType)
+    {
+        switch (npcType)
+        {
+            case NPCType.Sad:
+                sad.SetActive(true);
+                break;
+            case NPCType.Angry:
+                angry.SetActive(true);
+                break;
+            case NPCType.Scared:
+                scared.SetActive(true);
+                break;
+            case NPCType.Happy:
+                happy.SetActive(true);
+                break;
+            case NPCType.Strong:
+                strong.SetActive(true);
+                break;
+            case NPCType.Calm:
+                calm.SetActive(true);
+                break;
+            default:
+                break;
         }
     }
 }
