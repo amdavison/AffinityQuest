@@ -3,7 +3,8 @@
 /// <summary>
 /// Maze Direction enum.
 /// </summary>
-public enum MazeDirection {
+public enum MazeDirection
+{
 	North,
 	East,
 	South,
@@ -13,8 +14,8 @@ public enum MazeDirection {
 /// <summary>
 /// Static maze directions object.
 /// </summary>
-public static class MazeDirections {
-
+public static class MazeDirections
+{
 	public const int Count = 4;
 
 	public static MazeDirection RandomValue {
@@ -35,7 +36,7 @@ public static class MazeDirections {
     /// </summary>
     /// <param name="direction">MazeDirection current direction</param>
     /// <returns>MazeDirection direction opposite from given direction</returns>
-	public static MazeDirection GetOpposite (this MazeDirection direction) {
+	public static MazeDirection GetOpposite(this MazeDirection direction) {
 		return opposites[(int)direction];
 	}
 
@@ -44,7 +45,7 @@ public static class MazeDirections {
     /// </summary>
     /// <param name="direction">MazeDirection current direction</param>
     /// <returns>MazeDirection direction clockwise from given direction</returns>
-	public static MazeDirection GetNextClockwise (this MazeDirection direction) {
+	public static MazeDirection GetNextClockwise(this MazeDirection direction) {
 		return (MazeDirection)(((int)direction + 1) % Count);
 	}
 
@@ -53,7 +54,7 @@ public static class MazeDirections {
     /// </summary>
     /// <param name="direction">MazeDirection current direction</param>
     /// <returns>MazeDirection direction counterclockwise from given direction</returns>
-	public static MazeDirection GetNextCounterclockwise (this MazeDirection direction) {
+	public static MazeDirection GetNextCounterclockwise(this MazeDirection direction) {
 		return (MazeDirection)(((int)direction + Count - 1) % Count);
 	}
 	
@@ -69,7 +70,7 @@ public static class MazeDirections {
     /// </summary>
     /// <param name="direction">MazeDirection current direction</param>
     /// <returns>IntVector2 vector</returns>
-	public static IntVector2 ToIntVector2 (this MazeDirection direction) {
+	public static IntVector2 ToIntVector2(this MazeDirection direction) {
 		return vectors[(int)direction];
 	}
 
@@ -85,7 +86,7 @@ public static class MazeDirections {
     /// </summary>
     /// <param name="direction">MazeDirection current direction</param>
     /// <returns>Quaternion rotation</returns>
-	public static Quaternion ToRotation (this MazeDirection direction) {
+	public static Quaternion ToRotation(this MazeDirection direction) {
 		return rotations[(int)direction];
 	}
 }

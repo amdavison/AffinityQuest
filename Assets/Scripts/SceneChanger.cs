@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,41 +7,38 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class SceneChanger : MonoBehaviour
 {
-    public Animator animator;
-    public float transitionTime = 1.75f;
+    private FadeInOut fade;
 
-    /// <summary>
-    /// Begins quest game and loads game scene level.
-    /// </summary>
-    public void StartQuest()
+    public static SceneChanger instance;
+
+    private void Start()
     {
-        Debug.Log("Starting quest!");
-        StartCoroutine(LoadLevel("GameScene"));
+        instance = this;
+        fade = FindFirstObjectByType<FadeInOut>();
     }
 
     /// <summary>
-    /// Quits application.
+    /// Loads new level.
     /// </summary>
-    public void QuitGame()
+    /// <param sceneName="sceneName">string name of level to load</param>
+    public void LoadScene(string sceneName)
     {
-        Application.Quit();
-        Debug.Log("Quit");
+        StartCoroutine(LoadAsyncScene(sceneName));
     }
 
     /// <summary>
     /// Controls fade out between levels.
     /// </summary>
-    /// <param name="name">string name of level to load</param>
+    /// <param sceneName="sceneName">string name of level to load</param>
     /// <returns>IEnumerator transition time</returns>
-    private IEnumerator LoadLevel(string name)
+    private IEnumerator LoadAsyncScene(string sceneName)
     {
-        // play animation
-        animator.SetTrigger("Start");
-        // wait
-        yield return new WaitForSeconds(transitionTime);
+        // call fade and play transition clip
+        fade.FadeIn();
+        AudioManager.instance.PlayBackground(AudioManager.instance.transition);
 
         // load scene
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(name);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
 
         while (!asyncLoad.isDone)
         {

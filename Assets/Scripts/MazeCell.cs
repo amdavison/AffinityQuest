@@ -3,14 +3,12 @@
 /// <summary>
 /// Manages creation of maze cell instance.
 /// </summary>
-public class MazeCell : MonoBehaviour {
-
+public class MazeCell : MonoBehaviour
+{
 	public IntVector2 coordinates;
-
 	public MazeRoom room;
 
-	private MazeCellEdge[] edges = new MazeCellEdge[MazeDirections.Count];
-
+    private readonly MazeCellEdge[] edges = new MazeCellEdge[MazeDirections.Count];
 	private int initializedEdgeCount;
 
 	public bool IsFullyInitialized {
@@ -38,9 +36,10 @@ public class MazeCell : MonoBehaviour {
     /// Initializes and sets material for MazeCell
     /// </summary>
     /// <param name="room">MazeRoom cell's room</param>
-	public void Initialize (MazeRoom room) {
+	public void Initialize(MazeRoom room) {
 		room.Add(this);
 		transform.GetChild(0).GetComponent<Renderer>().material = room.settings.floorMaterial;
+		transform.GetChild(1).GetComponent<Renderer>().material = room.settings.ceilingMaterial;
 	}
 
 	/// <summary>
@@ -48,7 +47,7 @@ public class MazeCell : MonoBehaviour {
     /// </summary>
     /// <param name="direction">MazeDirection given direction</param>
     /// <returns>MazeCellEdge edge at given direction</returns>
-	public MazeCellEdge GetEdge (MazeDirection direction) {
+	public MazeCellEdge GetEdge(MazeDirection direction) {
 		return edges[(int)direction];
 	}
 
@@ -57,7 +56,7 @@ public class MazeCell : MonoBehaviour {
     /// </summary>
     /// <param name="direction"></param>
     /// <param name="edge"></param>
-	public void SetEdge (MazeDirection direction, MazeCellEdge edge) {
+	public void SetEdge(MazeDirection direction, MazeCellEdge edge) {
 		edges[(int)direction] = edge;
 		initializedEdgeCount += 1;
 	}
@@ -65,21 +64,21 @@ public class MazeCell : MonoBehaviour {
 	/// <summary>
     /// Shows MazeCell.
     /// </summary>
-	public void Show () {
+	public void Show() {
 		gameObject.SetActive(true);
 	}
 
 	/// <summary>
     /// Hides MazeCell.
     /// </summary>
-	public void Hide () {
+	public void Hide() {
 		gameObject.SetActive(false);
 	}
 
 	/// <summary>
     /// Shows room player has entered.
     /// </summary>
-	public void OnPlayerEntered () {
+	public void OnPlayerEntered() {
 		room.Show();
 		for (int i = 0; i < edges.Length; i++) {
 			edges[i].OnPlayerEntered();
@@ -89,8 +88,8 @@ public class MazeCell : MonoBehaviour {
 	/// <summary>
     /// Hides room player exited.
     /// </summary>
-	public void OnPlayerExited () {
-		room.Hide();
+	public void OnPlayerExited() {
+		//room.Hide();
 		for (int i = 0; i < edges.Length; i++) {
 			edges[i].OnPlayerExited();
 		}
