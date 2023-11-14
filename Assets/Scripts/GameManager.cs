@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     public static bool portalActivated = false;
     public static bool SFXHasPlayed = false;
 
-	private List<NPCData> npcs = new();
+    private readonly List<NPCData> npcs = new();
     private float timeRemaining = 5f;
 
     public delegate void PortalActivatedHandler();

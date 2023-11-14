@@ -12,19 +12,21 @@ public class MazeDoor : MazePassage
         mirroredRotation = Quaternion.Euler(0f, 90f, 0f);
     private bool isMirrored;
 
-	private MazeDoor OtherSideOfDoor {
+    private MazeDoor OtherSideOfDoor
+    {
 		get {
 			return otherCell.GetEdge(direction.GetOpposite()) as MazeDoor;
 		}
 	}
-	
-	/// <summary>
+
+    /// <summary>
     /// Initializes MazeDoor passage.
     /// </summary>
     /// <param name="primary">MazeCell primary cell</param>
     /// <param name="other">MazeCell secondary neighbor</param>
     /// <param name="direction">MazeDirection direction of door instance for primary cell</param>
-	public override void Initialize(MazeCell primary, MazeCell other, MazeDirection direction) {
+    public override void Initialize(MazeCell primary, MazeCell other, MazeDirection direction)
+    {
 		base.Initialize(primary, other, direction);
 		if (OtherSideOfDoor != null) {
 			isMirrored = true;
@@ -42,19 +44,21 @@ public class MazeDoor : MazePassage
 		}
 	}
 
-	/// <summary>
+    /// <summary>
     /// Opens door and shows neighboring room.
     /// </summary>
-	public override void OnPlayerEntered() {
+    public override void OnPlayerEntered()
+    {
 		OtherSideOfDoor.hinge.localRotation = hinge.localRotation = isMirrored ? mirroredRotation : normalRotation;
 		OtherSideOfDoor.cell.room.Show();
 		
 	}
-	
-	/// <summary>
+
+    /// <summary>
     /// Closes door.
     /// </summary>
-	public override void OnPlayerExited() {
+    public override void OnPlayerExited()
+    {
 		OtherSideOfDoor.hinge.localRotation = hinge.localRotation = Quaternion.identity;
 		//OtherSideOfDoor.cell.room.Hide();
 	}
