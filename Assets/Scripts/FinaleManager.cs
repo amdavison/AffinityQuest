@@ -30,11 +30,11 @@ public class FinaleManager : MonoBehaviour
     /// <returns>IEnumerator wait time</returns>
     private IEnumerator PlayCredits()
     {
-        yield return new WaitForSeconds(5);
         stats = GameManager.correctCount * 100f / GameManager.questionsAsked;
-
         credits = new List<string>() { credit2, credit3 };
         creditText.text = credit1 + "\nGame Percentage: " + stats.ToString("0.00") + "%";
+
+        yield return new WaitForSeconds(5);
 
         fade.FadeOut();
         AudioManager.instance.PlayBackground(AudioManager.instance.finale);
