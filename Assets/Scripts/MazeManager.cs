@@ -15,14 +15,12 @@ public class MazeManager : MonoBehaviour
     private Player playerInstance;
     private GameObject portalInstance;
     private FadeInOut fade;
-
-    public GameObject Portal { get; }
+	private readonly List<MazeCell> npcCells = new();
 
     private void Start()
 	{
 		fade = FindFirstObjectByType<FadeInOut>();
 		StartCoroutine(BeginGame());
-
 	}
 
     private void OnEnable()
@@ -40,6 +38,7 @@ public class MazeManager : MonoBehaviour
     /// </summary>
 	public void LevelComplete()
     {
+		fade.FadeIn();
 		if (GameManager.level == Level.Dark)
         {
 			RestartGame();
@@ -57,9 +56,9 @@ public class MazeManager : MonoBehaviour
     /// <returns>IEnumerator mazeInstance generation</returns>
     private IEnumerator BeginGame()
 	{
-		mazeInstance = Instantiate(mazePrefab) as Maze;
+		mazeInstance = Instantiate(mazePrefab);
 		yield return StartCoroutine(mazeInstance.Generate());
-		playerInstance = Instantiate(playerPrefab) as Player;
+		playerInstance = Instantiate(playerPrefab);
 		portalInstance = Instantiate(portalPrefab);
 		MazeCell initialCell = mazeInstance.GetCell(mazeInstance.RandomCoordinates);
         portalInstance.transform.localPosition = initialCell.transform.localPosition + new Vector3(0, 0.03f, 0);
@@ -76,7 +75,6 @@ public class MazeManager : MonoBehaviour
 	/// </summary>
 	private void RestartGame()
 	{
-		fade.FadeIn();
 		AudioManager.instance.PlayBackground(AudioManager.instance.transition);
 		Camera.main.gameObject.AddComponent<AudioListener>();
 		StopAllCoroutines();
@@ -89,7 +87,7 @@ public class MazeManager : MonoBehaviour
 		}
 		if (portalInstance != null)
         {
-			Destroy(portalInstance.gameObject);
+			Destroy(portalInstance);
         }
 		StartCoroutine(BeginGame());
 	}
@@ -104,6 +102,8 @@ public class MazeManager : MonoBehaviour
 		foreach (GameObject npc in npcPrefabs)
         {
 			MazeCell spawnLocation = mazeInstance.GetCell(mazeInstance.RandomCoordinates);
+			while (npcCells.Contains(spawnLocation)) spawnLocation = mazeInstance.GetCell(mazeInstance.RandomCoordinates);
+			npcCells.Add(spawnLocation);
 			GameObject npcInstance = Instantiate(npc);
 			npcInstance.transform.localPosition = spawnLocation.transform.localPosition;
 			npcInstance.transform.parent = spawnLocation.transform;
