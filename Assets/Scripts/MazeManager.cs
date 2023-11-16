@@ -80,7 +80,7 @@ public class MazeManager : MonoBehaviour
 	/// </summary>
 	private void RestartGame()
 	{
-		occupiedCells.Clear();
+        occupiedCells.Clear();
 		AudioManager.instance.PlayBackground(AudioManager.instance.transition);
 		Camera.main.gameObject.AddComponent<AudioListener>();
 		StopAllCoroutines();
