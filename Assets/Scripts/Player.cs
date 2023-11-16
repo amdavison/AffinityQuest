@@ -103,6 +103,7 @@ public class Player : MonoBehaviour
         }
         else if (other.CompareTag("Portal"))
         {
+            AudioManager.instance.PlaySFX(AudioManager.instance.portalEntry);
             mazeManager.LevelComplete();
         }
     }
