@@ -24,7 +24,7 @@ public class FinaleManager : MonoBehaviour
         credit1 = GameManager.correctCount switch
         {
             4 or 5 => "Great job!\nYou answered most of the questions correctly and have a good understanding of emotions.",
-            1 or 2 or 3 => "Oh no!\nIt looks like you need a little more work in understanding emotions. Better luck next time.",
+            0 or 1 or 2 or 3 => "Oh no!\nIt looks like you need a little more work in understanding emotions. Better luck next time.",
             _ => "Congratulations!\nYou completed your quest successfully and have a deeper understanding of emotions.",
         };
         StartCoroutine(PlayCredits());
