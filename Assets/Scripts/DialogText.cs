@@ -21,6 +21,7 @@ public class DialogText : MonoBehaviour
     public TextMeshProUGUI dialogText;
     public TextMeshProUGUI hintText;
     public TextMeshProUGUI portalText;
+    public TextMeshProUGUI interactionsText;
 
     private NPCData npcData;
 
@@ -40,6 +41,7 @@ public class DialogText : MonoBehaviour
     /// <param name="data">NPCData dialog data for NPC</param>
     public void StartInteraction(NPCData data)
     {
+        interactionsText.text = string.Join("/", GameManager.interactionCount, GameManager.instance.TotalInteractions);
         GameManager.interactionStarted = true;
         GameManager.questionsAsked++;
         hintText.gameObject.SetActive(false);
@@ -90,16 +92,13 @@ public class DialogText : MonoBehaviour
     /// <returns>IEnumerator wait time</returns>
     private IEnumerator WriteDialog(NPCData data)
     {
-        //yield return new WaitForSeconds(1);
-
         foreach (char textChar in data.greeting)
         {
             dialogText.text += textChar;
-            //AudioManager.instance.PlaySFX(AudioManager.instance.dialog);
             yield return new WaitForSeconds(waitTime);
         }
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.5f);
 
         AudioManager.instance.PlaySFX(AudioManager.instance.npc);
         dialogText.text = string.Empty;
@@ -107,7 +106,6 @@ public class DialogText : MonoBehaviour
         foreach (char textChar in data.dialog)
         {
             dialogText.text += textChar;
-            //AudioManager.instance.PlaySFX(AudioManager.instance.dialog);
             yield return new WaitForSeconds(waitTime);
         }
 
@@ -166,7 +164,6 @@ public class DialogText : MonoBehaviour
         foreach (char textChar in dialog)
         {
             dialogText.text += textChar;
-            //AudioManager.instance.PlaySFX(AudioManager.instance.dialog);
             yield return new WaitForSeconds(waitTime);
         }
         btns[0].interactable = true;

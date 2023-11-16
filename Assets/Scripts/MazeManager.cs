@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 /// <summary>
@@ -10,12 +11,13 @@ public class MazeManager : MonoBehaviour
     public Maze mazePrefab;
     public Player playerPrefab;
     public GameObject portalPrefab;
+	public TextMeshProUGUI interactionsText;
 
     private Maze mazeInstance;
     private Player playerInstance;
     private GameObject portalInstance;
     private FadeInOut fade;
-	private readonly List<MazeCell> npcCells = new();
+	private readonly List<MazeCell> occupiedCells = new();
 
     private void Start()
 	{
@@ -56,16 +58,19 @@ public class MazeManager : MonoBehaviour
     /// <returns>IEnumerator mazeInstance generation</returns>
     private IEnumerator BeginGame()
 	{
+		//interactionsText.text = string.Join("/", GameManager.interactionCount, GameManager.instance.TotalInteractions);
 		mazeInstance = Instantiate(mazePrefab);
 		yield return StartCoroutine(mazeInstance.Generate());
 		playerInstance = Instantiate(playerPrefab);
 		portalInstance = Instantiate(portalPrefab);
 		MazeCell initialCell = mazeInstance.GetCell(mazeInstance.RandomCoordinates);
+		occupiedCells.Add(initialCell);
         portalInstance.transform.localPosition = initialCell.transform.localPosition + new Vector3(0, 0.03f, 0);
         portalInstance.SetActive(false);
         playerInstance.SetLocation(initialCell);
         SpawnNPCs();
 		Destroy(Camera.main.GetComponent<AudioListener>());
+		interactionsText.text = string.Join("/", GameManager.interactionCount, GameManager.instance.TotalInteractions);
 		fade.FadeOut();
 		AudioManager.instance.PlayBackground(AudioManager.instance.gamePlay);
 	}
@@ -75,6 +80,7 @@ public class MazeManager : MonoBehaviour
 	/// </summary>
 	private void RestartGame()
 	{
+		occupiedCells.Clear();
 		AudioManager.instance.PlayBackground(AudioManager.instance.transition);
 		Camera.main.gameObject.AddComponent<AudioListener>();
 		StopAllCoroutines();
@@ -102,8 +108,8 @@ public class MazeManager : MonoBehaviour
 		foreach (GameObject npc in npcPrefabs)
         {
 			MazeCell spawnLocation = mazeInstance.GetCell(mazeInstance.RandomCoordinates);
-			while (npcCells.Contains(spawnLocation)) spawnLocation = mazeInstance.GetCell(mazeInstance.RandomCoordinates);
-			npcCells.Add(spawnLocation);
+			while (occupiedCells.Contains(spawnLocation)) spawnLocation = mazeInstance.GetCell(mazeInstance.RandomCoordinates);
+			occupiedCells.Add(spawnLocation);
 			GameObject npcInstance = Instantiate(npc);
 			npcInstance.transform.localPosition = spawnLocation.transform.localPosition;
 			npcInstance.transform.parent = spawnLocation.transform;
