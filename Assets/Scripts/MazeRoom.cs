@@ -11,20 +11,22 @@ public class MazeRoom : ScriptableObject
 
     private readonly List<MazeCell> cells = new();
 
-	/// <summary>
+    /// <summary>
     /// Adds room cells to list of cells for room.
     /// </summary>
     /// <param name="cell">MazeCell cell to add to room</param>
-	public void Add(MazeCell cell) {
+    public void Add(MazeCell cell)
+    {
 		cell.room = this;
 		cells.Add(cell);
 	}
 
-	/// <summary>
+    /// <summary>
     /// Assimilates room instance with current room.
     /// </summary>
     /// <param name="room">MazeRoom room to assimilate</param>
-	public void Assimilate(MazeRoom room) {
+    public void Assimilate(MazeRoom room)
+    {
 		for (int i = 0; i < room.cells.Count; i++) {
 			Add(room.cells[i]);
 		}
@@ -44,7 +46,8 @@ public class MazeRoom : ScriptableObject
     /// <summary>
     /// Shows all cells in room.
     /// </summary>
-    public void Show() {
+    public void Show()
+    {
 		for (int i = 0; i < cells.Count; i++) {
 			cells[i].Show();
 		}

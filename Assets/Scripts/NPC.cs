@@ -25,7 +25,6 @@ public class NPC : MonoBehaviour
         NPCData data = Data;
         if (data != null)
         {
-            //data = dialogs.First.Value;
             dialogs.RemoveFirst();
             if (dialogs.Count == startCount - 1) { GameManager.interactionCount++; }
         }

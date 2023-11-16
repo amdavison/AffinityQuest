@@ -34,8 +34,8 @@ public class SceneChanger : MonoBehaviour
     private IEnumerator LoadAsyncScene(string sceneName)
     {
         // call fade and play transition clip
-        fade.FadeIn();
         AudioManager.instance.PlayBackground(AudioManager.instance.transition);
+        fade.FadeIn();
 
         // load scene
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);

@@ -9,7 +9,7 @@ public class Maze : MonoBehaviour
 {
 	public IntVector2 size;
 	public MazeCell cellPrefab;
-	public float generationStepDelay;
+	public float generationStepDelay = 0f;
 	public MazePassage passagePrefab;
 	public MazeDoor doorPrefab;
 	[Range(0f, 1f)] public float doorProbability;
@@ -17,40 +17,44 @@ public class Maze : MonoBehaviour
 	public MazeRoomSettings[] roomSettings;
 
 	private MazeCell[,] cells;
-	private List<MazeRoom> rooms = new List<MazeRoom>();
+	private readonly List<MazeRoom> rooms = new();
 
-	public IntVector2 RandomCoordinates {
+    public IntVector2 RandomCoordinates
+    {
 		get {
 			return new IntVector2(Random.Range(0, size.x), Random.Range(0, size.z));
 		}
 	}
 
-	/// <summary>
+    /// <summary>
     /// Verifies if given coordinate is within game space.
     /// </summary>
     /// <param name="coordinate">IntVector2 to verify</param>
     /// <returns>bool true if within game space, otherwise false</returns>
-	public bool ContainsCoordinates(IntVector2 coordinate) {
+    public bool ContainsCoordinates(IntVector2 coordinate)
+    {
 		return coordinate.x >= 0 && coordinate.x < size.x && coordinate.z >= 0 && coordinate.z < size.z;
 	}
 
-	/// <summary>
+    /// <summary>
     /// Retrives MazeCell at given coordinates.
     /// </summary>
     /// <param name="coordinates">IntVector2 coordinates of cell to retrieve</param>
     /// <returns>MazeCell at given coordinates</returns>
-	public MazeCell GetCell(IntVector2 coordinates) {
+    public MazeCell GetCell(IntVector2 coordinates)
+    {
 		return cells[coordinates.x, coordinates.z];
 	}
 
-	/// <summary>
+    /// <summary>
     /// Generates new maze of cells.
     /// </summary>
     /// <returns>IEnumerator wait delay</returns>
-	public IEnumerator Generate() {
-		WaitForSeconds delay = new WaitForSeconds(generationStepDelay);
+    public IEnumerator Generate()
+    {
+		WaitForSeconds delay = new(generationStepDelay);
 		cells = new MazeCell[size.x, size.z];
-		List<MazeCell> activeCells = new List<MazeCell>();
+		List<MazeCell> activeCells = new();
 		DoFirstGenerationStep(activeCells);
 		while (activeCells.Count > 0) {
 			yield return delay;
@@ -62,21 +66,23 @@ public class Maze : MonoBehaviour
         }
     }
 
-	/// <summary>
+    /// <summary>
     /// First generation step to create and add new cell to activeCells.
     /// </summary>
     /// <param name="activeCells">List<MazeCell> list of active cells</param>
-	private void DoFirstGenerationStep(List<MazeCell> activeCells) {
+    private void DoFirstGenerationStep(List<MazeCell> activeCells)
+    {
 		MazeCell newCell = CreateCell(RandomCoordinates);
 		newCell.Initialize(CreateRoom(-1));
 		activeCells.Add(newCell);
 	}
 
-	/// <summary>
+    /// <summary>
     /// Secondary generation step to create a passage, wall, or room.
     /// </summary>
     /// <param name="activeCells">List<MazeCell> list of active cells</param>
-	private void DoNextGenerationStep(List<MazeCell> activeCells) {
+    private void DoNextGenerationStep(List<MazeCell> activeCells)
+    {
 		int currentIndex = activeCells.Count - 1;
 		MazeCell currentCell = activeCells[currentIndex];
 		if (currentCell.IsFullyInitialized) {
@@ -104,13 +110,14 @@ public class Maze : MonoBehaviour
 		}
 	}
 
-	/// <summary>
+    /// <summary>
     /// Creates new MazeCell at given coordinates.
     /// </summary>
     /// <param name="coordinates">IntVector2 coordinates of new cell</param>
     /// <returns>MazeCell that was created</returns>
-	private MazeCell CreateCell(IntVector2 coordinates) {
-		MazeCell newCell = Instantiate(cellPrefab) as MazeCell;
+    private MazeCell CreateCell(IntVector2 coordinates)
+    {
+		MazeCell newCell = Instantiate(cellPrefab);
 		cells[coordinates.x, coordinates.z] = newCell;
 		newCell.coordinates = coordinates;
 		newCell.name = "Maze Cell " + coordinates.x + ", " + coordinates.z;
@@ -119,17 +126,18 @@ public class Maze : MonoBehaviour
 		return newCell;
 	}
 
-	/// <summary>
+    /// <summary>
     /// Creates MazePassage doorway instance between current cell and neighbor for separate rooms.
     /// </summary>
     /// <param name="cell">MazeCell current cell</param>
     /// <param name="otherCell">MazeCell neighbor</param>
     /// <param name="direction">MazeDirection direction of passage placement</param>
-	private void CreatePassage(MazeCell cell, MazeCell otherCell, MazeDirection direction) {
+    private void CreatePassage(MazeCell cell, MazeCell otherCell, MazeDirection direction)
+    {
 		MazePassage prefab = Random.value < doorProbability ? doorPrefab : passagePrefab;
-		MazePassage passage = Instantiate(prefab) as MazePassage;
+		MazePassage passage = Instantiate(prefab);
 		passage.Initialize(cell, otherCell, direction);
-		passage = Instantiate(prefab) as MazePassage;
+		passage = Instantiate(prefab);
 		if (passage is MazeDoor) {
 			otherCell.Initialize(CreateRoom(cell.room.settingsIndex));
 		}
@@ -139,16 +147,17 @@ public class Maze : MonoBehaviour
 		passage.Initialize(otherCell, cell, direction.GetOpposite());
 	}
 
-	/// <summary>
+    /// <summary>
     /// Creates MazePassage instance between current cell and neighbor for same room.
     /// </summary>
     /// <param name="cell">MazeCell current cell</param>
     /// <param name="otherCell">MazeCell neighbor</param>
     /// <param name="direction">MazeDirection direction of passage placement</param>
-	private void CreatePassageInSameRoom(MazeCell cell, MazeCell otherCell, MazeDirection direction) {
-		MazePassage passage = Instantiate(passagePrefab) as MazePassage;
+    private void CreatePassageInSameRoom(MazeCell cell, MazeCell otherCell, MazeDirection direction)
+    {
+		MazePassage passage = Instantiate(passagePrefab);
 		passage.Initialize(cell, otherCell, direction);
-		passage = Instantiate(passagePrefab) as MazePassage;
+		passage = Instantiate(passagePrefab);
 		passage.Initialize(otherCell, cell, direction.GetOpposite());
 		if (cell.room != otherCell.room) {
 			MazeRoom roomToAssimilate = otherCell.room;
@@ -158,27 +167,29 @@ public class Maze : MonoBehaviour
 		}
 	}
 
-	/// <summary>
+    /// <summary>
     /// Creates new MazeWall instance between current cell and neighbor.
     /// </summary>
     /// <param name="cell">MazeCell current cell</param>
     /// <param name="otherCell">MazeCell neighbor</param>
     /// <param name="direction">MazeDirection direction of wall placement</param>
-	private void CreateWall(MazeCell cell, MazeCell otherCell, MazeDirection direction) {
-		MazeWall wall = Instantiate(wallPrefabs[Random.Range(0, wallPrefabs.Length)]) as MazeWall;
+    private void CreateWall(MazeCell cell, MazeCell otherCell, MazeDirection direction)
+    {
+		MazeWall wall = Instantiate(wallPrefabs[Random.Range(0, wallPrefabs.Length)]);
 		wall.Initialize(cell, otherCell, direction);
 		if (otherCell != null) {
-			wall = Instantiate(wallPrefabs[Random.Range(0, wallPrefabs.Length)]) as MazeWall;
+			wall = Instantiate(wallPrefabs[Random.Range(0, wallPrefabs.Length)]);
 			wall.Initialize(otherCell, cell, direction.GetOpposite());
 		}
 	}
 
-	/// <summary>
+    /// <summary>
     /// Creates new MazeRoom.
     /// </summary>
     /// <param name="indexToExclude">int index of current room</param>
     /// <returns>MazeRoom that was created</returns>
-	private MazeRoom CreateRoom(int indexToExclude) {
+    private MazeRoom CreateRoom(int indexToExclude)
+    {
 		MazeRoom newRoom = ScriptableObject.CreateInstance<MazeRoom>();
 		newRoom.settingsIndex = Random.Range(0, roomSettings.Length);
 		if (newRoom.settingsIndex == indexToExclude) {

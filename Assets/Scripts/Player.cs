@@ -61,24 +61,24 @@ public class Player : MonoBehaviour
     {
         if (canMove == true)
         {
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
             {
                 Move(currentDirection);
             }
-            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
             {
                 Move(currentDirection.GetOpposite());
             }
-            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 Look(currentDirection.GetNextCounterclockwise());
             }
-            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
             {
                 Look(currentDirection.GetNextClockwise());
             }
         }
-        if (activeNPC != null && Input.GetKeyDown(KeyCode.Space))
+        if (activeNPC != null && !GameManager.interactionStarted && Input.GetKeyDown(KeyCode.Space))
         {
             canMove = false;
             AudioManager.instance.PlaySFX(AudioManager.instance.npc);
@@ -103,6 +103,7 @@ public class Player : MonoBehaviour
         }
         else if (other.CompareTag("Portal"))
         {
+            AudioManager.instance.PlaySFX(AudioManager.instance.portalEntry);
             mazeManager.LevelComplete();
         }
     }

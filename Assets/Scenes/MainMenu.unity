@@ -1377,9 +1377,9 @@ MonoBehaviour:
   openDoor: {fileID: 8300000, guid: fe04eceea7d254e459491a324fbb4878, type: 3}
   closeDoor: {fileID: 8300000, guid: 226e2bf1326684ecbb72af46defb9e21, type: 3}
   npc: {fileID: 8300000, guid: f8c7e44bb0b524ff78854d0a5a56f9e5, type: 3}
-  dialog: {fileID: 8300000, guid: c6c54688607dd45e4ac648de30477dd3, type: 3}
   buttonClick: {fileID: 8300000, guid: 340c04ce9d70d4d828ea40449703d68e, type: 3}
   portalOpen: {fileID: 8300000, guid: c2ec13878397d43d3995876ab715edf2, type: 3}
+  portalEntry: {fileID: 8300000, guid: 85268fd5c16094f388f7367ea7f8997c, type: 3}
   correct: {fileID: 8300000, guid: 1379aa8ebf59a4ef9a0474b02aba42ba, type: 3}
   incorrect: {fileID: 8300000, guid: ebb9800b9b4a84e998b89f19a55b169c, type: 3}
 --- !u!1 &1398006426

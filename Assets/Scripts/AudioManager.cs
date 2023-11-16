@@ -17,9 +17,9 @@ public class AudioManager : MonoBehaviour
     public AudioClip openDoor;
     public AudioClip closeDoor;
     public AudioClip npc;
-    public AudioClip dialog;
     public AudioClip buttonClick;
     public AudioClip portalOpen;
+    public AudioClip portalEntry;
     public AudioClip correct;
     public AudioClip incorrect;
 
