@@ -16,14 +16,12 @@ public class GameManager : MonoBehaviour
     public static int questionsAsked = 0;
     public static int correctCount = 0;
     public static NPC ActiveNPC { get; set; }
-    public static bool isInactive = false;
     public static Level level = Level.Dark;
     public static bool portalActivated = false;
     public static bool SFXHasPlayed = false;
     public static bool interactionStarted = false;
 
     private readonly List<NPCData> npcs = new();
-    private float timeRemaining = 5f;
 
     public delegate void PortalActivatedHandler();
     public event PortalActivatedHandler PortalActivated;
@@ -61,18 +59,6 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (isInactive == true && timeRemaining > 0 && ActiveNPC.Data != null)
-        {
-            timeRemaining -= Time.deltaTime;
-        }
-
-        if (timeRemaining <= 0)
-        {
-            ActiveNPC.gameObject.SetActive(true);
-            timeRemaining = 5f;
-            isInactive = false;
-        }
-
         // Check if portal needs to be activated
         if (portalActivated && !SFXHasPlayed)
         {

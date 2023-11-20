@@ -73,7 +73,7 @@ public class DialogText : MonoBehaviour
         dialogPanel.SetActive(false);
         btnPanel.SetActive(false);
         Player.instance.canMove = true;
-        if (GameManager.ActiveNPC != null) { GameManager.isInactive = true; }
+        if (GameManager.ActiveNPC != null) GameManager.ActiveNPC.StartTimer = true;
     }
 
     /// <summary>
@@ -135,16 +135,15 @@ public class DialogText : MonoBehaviour
             ShowCollectable(npcData.npcType);
             GameManager.correctCount++;
             StartCoroutine(DisplayDialog(npcData.correctDialog));
-            npc.gameObject.SetActive(false);
             GameManager.ActiveNPC = null;
         }
         else
         {
             AudioManager.instance.PlaySFX(AudioManager.instance.incorrect);
             StartCoroutine(DisplayDialog(npcData.incorrectDialog));
-            npc.gameObject.SetActive(false);
         }
 
+        npc.Deactivate();
         GameManager.portalActivated = GameManager.interactionCount == GameManager.instance.TotalInteractions;
 
         ToggleButtons();
@@ -167,7 +166,6 @@ public class DialogText : MonoBehaviour
             yield return new WaitForSeconds(waitTime);
         }
         btns[0].interactable = true;
-        //yield return null;
     }
 
     /// <summary>
