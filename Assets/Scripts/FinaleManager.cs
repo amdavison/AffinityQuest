@@ -87,7 +87,6 @@ public class FinaleManager : MonoBehaviour
         GameManager.correctCount = 0;
         GameManager.questionsAsked = 0;
         GameManager.ActiveNPC = null;
-        GameManager.isInactive = false;
         GameManager.level = Level.Dark;
         GameManager.portalActivated = false;
         GameManager.SFXHasPlayed = false;
