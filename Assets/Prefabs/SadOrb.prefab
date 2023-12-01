@@ -79,7 +79,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.016201971, g: 0, b: 1, a: 1}
   m_Intensity: 1
-  m_Range: 1
+  m_Range: 0.9
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -218,7 +218,7 @@ VisualEffect:
       m_Array: []
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 0.073578954, y: 0, z: 4.541358, w: 0}
+      - m_Value: {x: 0.032993384, y: 0, z: 9.082717, w: 0}
         m_Name: Color
         m_Overridden: 1
       - m_Value: {x: 0, y: 6.7404037, z: 21.138529, w: 0}
