@@ -98,7 +98,7 @@ public class DialogText : MonoBehaviour
             yield return new WaitForSeconds(waitTime);
         }
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(3f);
 
         AudioManager.instance.PlaySFX(AudioManager.instance.npc);
         dialogText.text = string.Empty;
