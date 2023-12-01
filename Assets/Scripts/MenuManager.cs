@@ -5,15 +5,13 @@ using UnityEngine;
 /// </summary>
 public class MenuManager : MonoBehaviour
 {
-    public SceneChanger sceneChanger;
-
     /// <summary>
     /// Begins quest game and loads game scene level.
     /// </summary>
     public void StartQuest()
     {
         AudioManager.instance.PlaySFX(AudioManager.instance.buttonClick);
-        sceneChanger.LoadScene("GameScene");
+        SceneChanger.instance.LoadScene("GameScene");
     }
 
     /// <summary>
