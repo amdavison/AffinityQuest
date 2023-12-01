@@ -25,7 +25,7 @@ public class AudioManager : MonoBehaviour
 
     public static AudioManager instance;
 
-    private void Start()
+    private void Awake()
     {
         instance = this;
         PlayBackground(mainMenu);

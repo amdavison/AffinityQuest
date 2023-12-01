@@ -11,7 +11,7 @@ public class SceneChanger : MonoBehaviour
 
     public static SceneChanger instance;
 
-    private void Start()
+    private void Awake()
     {
         instance = this;
         fade = FindFirstObjectByType<FadeInOut>();
